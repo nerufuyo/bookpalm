@@ -30,15 +30,13 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   //! Controllers
-  sl.registerLazySingleton(() => HomeController(
-        getBooks: sl(),
-        bookmarkBook: sl(),
-      ));
+  sl.registerLazySingleton(
+    () => HomeController(getBooks: sl(), bookmarkBook: sl()),
+  );
 
-  sl.registerLazySingleton(() => BookmarkController(
-        getBookmarkedBooks: sl(),
-        bookmarkBook: sl(),
-      ));
+  sl.registerLazySingleton(
+    () => BookmarkController(getBookmarkedBooks: sl(), bookmarkBook: sl()),
+  );
 
   //! Use cases
   sl.registerLazySingleton(() => GetBooks(sl()));
