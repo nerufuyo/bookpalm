@@ -227,30 +227,33 @@ class BookCard extends StatelessWidget {
     // Try to get the book cover image URL from formats
     String? imageUrl = book.formats['image/jpeg'];
 
-    return Container(
-      width: 85,
-      height: 130,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            offset: const Offset(0, 4),
-            blurRadius: 8,
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: imageUrl != null && imageUrl.isNotEmpty
-            ? CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => _buildPlaceholder(),
-                errorWidget: (context, url, error) => _buildPlaceholder(),
-              )
-            : _buildPlaceholder(),
+    return Hero(
+      tag: 'book-${book.id}',
+      child: Container(
+        width: 85,
+        height: 130,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              offset: const Offset(0, 4),
+              blurRadius: 8,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: imageUrl != null && imageUrl.isNotEmpty
+              ? CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => _buildPlaceholder(),
+                  errorWidget: (context, url, error) => _buildPlaceholder(),
+                )
+              : _buildPlaceholder(),
+        ),
       ),
     );
   }
