@@ -20,10 +20,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'BookPalm',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         elevation: 0,
         actions: [
@@ -45,14 +42,16 @@ class HomePage extends StatelessWidget {
               onSearchSubmitted: controller.searchBooks,
             ),
           ),
-          
+
           // Category Tabs
-          Obx(() => CategoryTabs(
-            categories: controller.categories,
-            selectedCategory: controller.selectedCategory.value,
-            onCategorySelected: controller.selectCategory,
-          )),
-          
+          Obx(
+            () => CategoryTabs(
+              categories: controller.categories,
+              selectedCategory: controller.selectedCategory.value,
+              onCategorySelected: controller.selectCategory,
+            ),
+          ),
+
           // Books List
           Expanded(
             child: Obx(() {
@@ -63,7 +62,7 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) => const BookCardShimmer(),
                 );
               }
-              
+
               if (controller.books.isEmpty && !controller.isLoading.value) {
                 return Center(
                   child: Column(
@@ -76,32 +75,32 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        controller.errorMessage.value.isNotEmpty 
+                        controller.errorMessage.value.isNotEmpty
                             ? controller.errorMessage.value
                             : 'No books found',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                         textAlign: TextAlign.center,
                       ),
                       if (controller.errorMessage.value.isNotEmpty)
                         const SizedBox(height: 16),
                       if (controller.errorMessage.value.isNotEmpty)
                         ElevatedButton(
-                          onPressed: () => controller.loadBooks(isRefresh: true),
+                          onPressed: () =>
+                              controller.loadBooks(isRefresh: true),
                           child: const Text('Retry'),
                         ),
                     ],
                   ),
                 );
               }
-              
+
               return RefreshIndicator(
                 onRefresh: () => controller.loadBooks(isRefresh: true),
                 child: ListView.builder(
                   padding: const EdgeInsets.all(16),
-                  itemCount: controller.books.length + (controller.hasMore.value ? 1 : 0),
+                  itemCount:
+                      controller.books.length +
+                      (controller.hasMore.value ? 1 : 0),
                   itemBuilder: (context, index) {
                     if (index == controller.books.length) {
                       // Loading indicator for pagination
@@ -116,7 +115,7 @@ class HomePage extends StatelessWidget {
                         return const SizedBox.shrink();
                       }
                     }
-                    
+
                     final book = controller.books[index];
                     return BookCard(
                       book: book,
@@ -124,7 +123,27 @@ class HomePage extends StatelessWidget {
                         context.push('/book/${book.id}');
                       },
                       onBookmarkTap: () {
-                        controller.toggleBookmark(book);
+                        controller.toggleBookmark(
+                          book,
+                          onSuccess: (message) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(message),
+                                backgroundColor: Colors.green.shade600,
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          },
+                          onError: (message) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(message),
+                                backgroundColor: Colors.red.shade600,
+                                duration: const Duration(seconds: 3),
+                              ),
+                            );
+                          },
+                        );
                       },
                     );
                   },

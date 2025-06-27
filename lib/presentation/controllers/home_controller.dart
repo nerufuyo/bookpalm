@@ -7,10 +7,7 @@ class HomeController extends GetxController {
   final GetBooks getBooks;
   final BookmarkBook bookmarkBook;
 
-  HomeController({
-    required this.getBooks,
-    required this.bookmarkBook,
-  });
+  HomeController({required this.getBooks, required this.bookmarkBook});
 
   // Observable states
   final RxList<Book> books = <Book>[].obs;
@@ -57,7 +54,9 @@ class HomeController extends GetxController {
 
     final params = GetBooksParams(
       search: searchQuery.value.isEmpty ? null : searchQuery.value,
-      topic: selectedCategory.value == 'popular' ? null : selectedCategory.value,
+      topic: selectedCategory.value == 'popular'
+          ? null
+          : selectedCategory.value,
       sort: selectedSort.value == 'popular' ? 'popular' : selectedSort.value,
       languages: selectedLanguages.isEmpty ? null : selectedLanguages.toList(),
       authorYearStart: authorYearStart.value,
@@ -78,7 +77,7 @@ class HomeController extends GetxController {
         } else {
           books.addAll(bookListResponse.results);
         }
-        
+
         hasMore.value = bookListResponse.next != null;
         currentPage.value++;
         isLoading.value = false;
@@ -107,28 +106,26 @@ class HomeController extends GetxController {
     selectedSort.value = sort ?? 'popular';
     this.authorYearStart.value = authorYearStart;
     this.authorYearEnd.value = authorYearEnd;
-    
+
     await loadBooks(isRefresh: true);
   }
 
-  Future<void> toggleBookmark(Book book) async {
+  Future<void> toggleBookmark(
+    Book book, {
+    Function(String)? onSuccess,
+    Function(String)? onError,
+  }) async {
     final result = await bookmarkBook(book);
-    
+
     result.fold(
       (failure) {
-        Get.snackbar(
-          'Error',
-          failure.message,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        if (onError != null) {
+          onError(failure.message);
+        }
       },
       (success) {
-        if (success) {
-          Get.snackbar(
-            'Success', 
-            'Book bookmarked successfully',
-            snackPosition: SnackPosition.BOTTOM,
-          );
+        if (success && onSuccess != null) {
+          onSuccess('Book bookmarked successfully');
         }
       },
     );

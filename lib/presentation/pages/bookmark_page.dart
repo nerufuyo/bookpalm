@@ -29,10 +29,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
       appBar: AppBar(
         title: const Text(
           'Bookmarks',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -42,10 +39,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             if (_controller.bookmarkedBooks.isNotEmpty) {
               return IconButton(
                 onPressed: () => _controller.refreshBookmarks(),
-                icon: const Icon(
-                  Icons.refresh_rounded,
-                  color: Colors.black87,
-                ),
+                icon: const Icon(Icons.refresh_rounded, color: Colors.black87),
                 tooltip: 'Refresh',
               );
             }
@@ -101,10 +95,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             child: Text(
               _controller.errorMessage.value,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade600,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
             ),
           ),
           const SizedBox(height: 24),
@@ -115,10 +106,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.amber.shade600,
               foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -144,7 +132,18 @@ class _BookmarkPageState extends State<BookmarkPage> {
               context.push('/book/${book.id}', extra: book);
             },
             onRemoveBookmark: () {
-              _controller.removeBookmarkById(book);
+              _controller.removeBookmarkById(
+                book,
+                onSuccess: (message) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(message),
+                      backgroundColor: Colors.green.shade600,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              );
             },
           );
         },

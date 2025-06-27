@@ -42,17 +42,18 @@ class BookmarkController extends GetxController {
     );
   }
 
-  Future<void> removeBookmarkById(Book book) async {
+  Future<void> removeBookmarkById(
+    Book book, {
+    Function(String)? onSuccess,
+  }) async {
     // Remove from local list immediately for better UX
     bookmarkedBooks.removeWhere((b) => b.id == book.id);
 
     // TODO: Implement actual remove bookmark logic with use case
     // For now, just show success message
-    Get.snackbar(
-      'Success',
-      'Bookmark removed successfully',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    if (onSuccess != null) {
+      onSuccess('Bookmark removed successfully');
+    }
 
     // Refresh the list to ensure consistency
     await loadBookmarkedBooks();
