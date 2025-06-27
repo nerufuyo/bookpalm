@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart';
 import '../../domain/entities/book.dart';
-import '../controllers/home_controller.dart';
 
-class BookCard extends StatelessWidget {
+class BookmarkCard extends StatelessWidget {
   final Book book;
   final VoidCallback onTap;
-  final VoidCallback onBookmarkTap;
+  final VoidCallback onRemoveBookmark;
 
-  const BookCard({
+  const BookmarkCard({
     super.key,
     required this.book,
     required this.onTap,
-    required this.onBookmarkTap,
+    required this.onRemoveBookmark,
   });
 
   @override
@@ -22,7 +20,9 @@ class BookCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       elevation: 4,
       shadowColor: Colors.black.withValues(alpha: 0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -32,7 +32,10 @@ class BookCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Colors.white, Colors.grey.shade50],
+              colors: [
+                Colors.white,
+                Colors.amber.shade50,
+              ],
             ),
           ),
           child: Padding(
@@ -42,9 +45,9 @@ class BookCard extends StatelessWidget {
               children: [
                 // Book Cover
                 _buildBookCover(),
-
+                
                 const SizedBox(width: 16),
-
+                
                 // Book Details
                 Expanded(
                   child: Column(
@@ -60,9 +63,9 @@ class BookCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-
+                      
                       const SizedBox(height: 8),
-
+                      
                       if (book.authors.isNotEmpty)
                         Text(
                           'by ${book.authors.map((author) => author.name).join(', ')}',
@@ -74,9 +77,9 @@ class BookCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-
+                      
                       const SizedBox(height: 12),
-
+                      
                       if (book.subjects.isNotEmpty)
                         Wrap(
                           spacing: 6,
@@ -90,13 +93,13 @@ class BookCard extends StatelessWidget {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Colors.blue.shade100,
-                                    Colors.blue.shade50,
+                                    Colors.amber.shade100,
+                                    Colors.amber.shade50,
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: Colors.blue.shade200,
+                                  color: Colors.amber.shade200,
                                   width: 0.5,
                                 ),
                               ),
@@ -105,15 +108,15 @@ class BookCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.blue.shade700,
+                                  color: Colors.amber.shade700,
                                 ),
                               ),
                             );
                           }).toList(),
                         ),
-
+                      
                       const SizedBox(height: 12),
-
+                      
                       Row(
                         children: [
                           Container(
@@ -183,37 +186,26 @@ class BookCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Bookmark Button
-                GetX<HomeController>(
-                  builder: (controller) {
-                    final isBookmarked = controller.isBookmarked(book);
-                    return Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isBookmarked
-                            ? Colors.amber.shade100
-                            : Colors.grey.shade100,
-                      ),
-                      child: IconButton(
-                        onPressed: onBookmarkTap,
-                        icon: Icon(
-                          isBookmarked
-                              ? Icons.bookmark_rounded
-                              : Icons.bookmark_border_rounded,
-                          color: isBookmarked
-                              ? Colors.amber.shade700
-                              : Colors.grey.shade600,
-                          size: 22,
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        constraints: const BoxConstraints(
-                          minWidth: 40,
-                          minHeight: 40,
-                        ),
-                      ),
-                    );
-                  },
+                
+                // Remove Bookmark Button
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red.shade50,
+                  ),
+                  child: IconButton(
+                    onPressed: () => _showRemoveDialog(context),
+                    icon: Icon(
+                      Icons.bookmark_remove_rounded,
+                      color: Colors.red.shade600,
+                      size: 22,
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 40,
+                      minHeight: 40,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -226,7 +218,7 @@ class BookCard extends StatelessWidget {
   Widget _buildBookCover() {
     // Try to get the book cover image URL from formats
     String? imageUrl = book.formats['image/jpeg'];
-
+    
     return Container(
       width: 85,
       height: 130,
@@ -262,19 +254,72 @@ class BookCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.indigo.shade300,
-            Colors.blue.shade400,
-            Colors.purple.shade300,
+            Colors.amber.shade300,
+            Colors.orange.shade400,
+            Colors.deepOrange.shade300,
           ],
         ),
       ),
       child: Stack(
         children: [
           // Background pattern
-          Positioned.fill(child: CustomPaint(painter: _BookPatternPainter())),
-          // Book icon
+          Positioned.fill(
+            child: CustomPaint(
+              painter: _BookPatternPainter(),
+            ),
+          ),
+          // Bookmark icon
           const Center(
-            child: Icon(Icons.menu_book_rounded, size: 36, color: Colors.white),
+            child: Icon(
+              Icons.bookmark_rounded,
+              size: 36,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showRemoveDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: const Text(
+          'Remove Bookmark',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to remove "${book.title}" from your bookmarks?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.grey[600],
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              onRemoveBookmark();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red.shade600,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text('Remove'),
           ),
         ],
       ),
