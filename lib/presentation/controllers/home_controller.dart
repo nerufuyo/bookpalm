@@ -20,6 +20,12 @@ class HomeController extends GetxController {
   final RxBool hasMore = true.obs;
   final RxInt currentPage = 1.obs;
 
+  // Filter states
+  final RxList<String> selectedLanguages = <String>[].obs;
+  final RxString selectedSort = 'popular'.obs;
+  final RxnInt authorYearStart = RxnInt();
+  final RxnInt authorYearEnd = RxnInt();
+
   // Book categories
   final RxString selectedCategory = 'popular'.obs;
   final List<String> categories = [
@@ -52,7 +58,10 @@ class HomeController extends GetxController {
     final params = GetBooksParams(
       search: searchQuery.value.isEmpty ? null : searchQuery.value,
       topic: selectedCategory.value == 'popular' ? null : selectedCategory.value,
-      sort: selectedCategory.value == 'popular' ? 'popular' : null,
+      sort: selectedSort.value == 'popular' ? 'popular' : selectedSort.value,
+      languages: selectedLanguages.isEmpty ? null : selectedLanguages.toList(),
+      authorYearStart: authorYearStart.value,
+      authorYearEnd: authorYearEnd.value,
       page: currentPage.value,
     );
 
@@ -88,16 +97,38 @@ class HomeController extends GetxController {
     await loadBooks(isRefresh: true);
   }
 
+  Future<void> applyFilters({
+    List<String>? languages,
+    String? sort,
+    int? authorYearStart,
+    int? authorYearEnd,
+  }) async {
+    selectedLanguages.assignAll(languages ?? []);
+    selectedSort.value = sort ?? 'popular';
+    this.authorYearStart.value = authorYearStart;
+    this.authorYearEnd.value = authorYearEnd;
+    
+    await loadBooks(isRefresh: true);
+  }
+
   Future<void> toggleBookmark(Book book) async {
     final result = await bookmarkBook(book);
     
     result.fold(
       (failure) {
-        Get.snackbar('Error', failure.message);
+        Get.snackbar(
+          'Error',
+          failure.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
       },
       (success) {
         if (success) {
-          Get.snackbar('Success', 'Book bookmarked successfully');
+          Get.snackbar(
+            'Success', 
+            'Book bookmarked successfully',
+            snackPosition: SnackPosition.BOTTOM,
+          );
         }
       },
     );
