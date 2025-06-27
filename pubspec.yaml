@@ -55,6 +55,9 @@ dependencies:
   
   # Dependency Injection
   get_it: ^7.7.0
+  
+  # Image Caching
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

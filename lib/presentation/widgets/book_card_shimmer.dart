@@ -34,54 +34,50 @@ class _BookCardShimmerState extends State<BookCardShimmer>
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 2,
+      elevation: 4,
+      shadowColor: Colors.black.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Book Cover Shimmer
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Container(
-                  width: 80,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                      begin: Alignment(_animation.value - 1, 0),
-                      end: Alignment(_animation.value, 0),
-                      colors: [
-                        Colors.grey[300]!,
-                        Colors.grey[100]!,
-                        Colors.grey[300]!,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              Colors.grey.shade50,
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Book Cover Shimmer
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return Container(
+                    width: 85,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 8,
+                          spreadRadius: 0,
+                        ),
                       ],
                     ),
-                  ),
-                );
-              },
-            ),
-            
-            const SizedBox(width: 16),
-            
-            // Book Details Shimmer
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Title shimmer
-                  AnimatedBuilder(
-                    animation: _animation,
-                    builder: (context, child) {
-                      return Container(
-                        height: 16,
-                        width: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
                           gradient: LinearGradient(
                             begin: Alignment(_animation.value - 1, 0),
                             end: Alignment(_animation.value, 0),
@@ -92,137 +88,221 @@ class _BookCardShimmerState extends State<BookCardShimmer>
                             ],
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  
-                  const SizedBox(height: 8),
-                  
-                  // Author shimmer
-                  AnimatedBuilder(
-                    animation: _animation,
-                    builder: (context, child) {
-                      return Container(
-                        height: 14,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          gradient: LinearGradient(
-                            begin: Alignment(_animation.value - 1, 0),
-                            end: Alignment(_animation.value, 0),
-                            colors: [
-                              Colors.grey[300]!,
-                              Colors.grey[100]!,
-                              Colors.grey[300]!,
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  
-                  const SizedBox(height: 12),
-                  
-                  // Tags shimmer
-                  Row(
-                    children: [
-                      AnimatedBuilder(
-                        animation: _animation,
-                        builder: (context, child) {
-                          return Container(
-                            height: 20,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              gradient: LinearGradient(
-                                begin: Alignment(_animation.value - 1, 0),
-                                end: Alignment(_animation.value, 0),
-                                colors: [
-                                  Colors.grey[300]!,
-                                  Colors.grey[100]!,
-                                  Colors.grey[300]!,
-                                ],
-                              ),
-                            ),
-                          );
-                        },
                       ),
-                      const SizedBox(width: 8),
-                      AnimatedBuilder(
-                        animation: _animation,
-                        builder: (context, child) {
-                          return Container(
-                            height: 20,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              gradient: LinearGradient(
-                                begin: Alignment(_animation.value - 1, 0),
-                                end: Alignment(_animation.value, 0),
-                                colors: [
-                                  Colors.grey[300]!,
-                                  Colors.grey[100]!,
-                                  Colors.grey[300]!,
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 12),
-                  
-                  // Download count shimmer
-                  AnimatedBuilder(
-                    animation: _animation,
-                    builder: (context, child) {
-                      return Container(
-                        height: 12,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          gradient: LinearGradient(
-                            begin: Alignment(_animation.value - 1, 0),
-                            end: Alignment(_animation.value, 0),
-                            colors: [
-                              Colors.grey[300]!,
-                              Colors.grey[100]!,
-                              Colors.grey[300]!,
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                    ),
+                  );
+                },
               ),
-            ),
-            
-            // Bookmark Button Shimmer
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: LinearGradient(
-                      begin: Alignment(_animation.value - 1, 0),
-                      end: Alignment(_animation.value, 0),
-                      colors: [
-                        Colors.grey[300]!,
-                        Colors.grey[100]!,
-                        Colors.grey[300]!,
+              
+              const SizedBox(width: 16),
+              
+              // Book Details Shimmer
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title shimmer
+                    AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, child) {
+                        return Container(
+                          height: 16,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              begin: Alignment(_animation.value - 1, 0),
+                              end: Alignment(_animation.value, 0),
+                              colors: [
+                                Colors.grey[300]!,
+                                Colors.grey[100]!,
+                                Colors.grey[300]!,
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    
+                    const SizedBox(height: 8),
+                    
+                    // Second title line shimmer
+                    AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, child) {
+                        return Container(
+                          height: 16,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              begin: Alignment(_animation.value - 1, 0),
+                              end: Alignment(_animation.value, 0),
+                              colors: [
+                                Colors.grey[300]!,
+                                Colors.grey[100]!,
+                                Colors.grey[300]!,
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    
+                    const SizedBox(height: 8),
+                    
+                    // Author shimmer
+                    AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, child) {
+                        return Container(
+                          height: 14,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              begin: Alignment(_animation.value - 1, 0),
+                              end: Alignment(_animation.value, 0),
+                              colors: [
+                                Colors.grey[300]!,
+                                Colors.grey[100]!,
+                                Colors.grey[300]!,
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    
+                    const SizedBox(height: 12),
+                    
+                    // Subject tags shimmer
+                    Row(
+                      children: [
+                        AnimatedBuilder(
+                          animation: _animation,
+                          builder: (context, child) {
+                            return Container(
+                              height: 24,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                gradient: LinearGradient(
+                                  begin: Alignment(_animation.value - 1, 0),
+                                  end: Alignment(_animation.value, 0),
+                                  colors: [
+                                    Colors.grey[300]!,
+                                    Colors.grey[100]!,
+                                    Colors.grey[300]!,
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 6),
+                        AnimatedBuilder(
+                          animation: _animation,
+                          builder: (context, child) {
+                            return Container(
+                              height: 24,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                gradient: LinearGradient(
+                                  begin: Alignment(_animation.value - 1, 0),
+                                  end: Alignment(_animation.value, 0),
+                                  colors: [
+                                    Colors.grey[300]!,
+                                    Colors.grey[100]!,
+                                    Colors.grey[300]!,
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                    
+                    const SizedBox(height: 12),
+                    
+                    // Download count and language shimmer
+                    Row(
+                      children: [
+                        AnimatedBuilder(
+                          animation: _animation,
+                          builder: (context, child) {
+                            return Container(
+                              height: 22,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  begin: Alignment(_animation.value - 1, 0),
+                                  end: Alignment(_animation.value, 0),
+                                  colors: [
+                                    Colors.grey[300]!,
+                                    Colors.grey[100]!,
+                                    Colors.grey[300]!,
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        const Spacer(),
+                        AnimatedBuilder(
+                          animation: _animation,
+                          builder: (context, child) {
+                            return Container(
+                              height: 22,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  begin: Alignment(_animation.value - 1, 0),
+                                  end: Alignment(_animation.value, 0),
+                                  colors: [
+                                    Colors.grey[300]!,
+                                    Colors.grey[100]!,
+                                    Colors.grey[300]!,
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              
+              // Bookmark Button Shimmer
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        begin: Alignment(_animation.value - 1, 0),
+                        end: Alignment(_animation.value, 0),
+                        colors: [
+                          Colors.grey[300]!,
+                          Colors.grey[100]!,
+                          Colors.grey[300]!,
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
