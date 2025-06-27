@@ -20,7 +20,19 @@ class _BookmarkPageState extends State<BookmarkPage> {
   @override
   void initState() {
     super.initState();
-    _controller = sl<BookmarkController>();
+    // Try to find existing controller first, otherwise create and register
+    try {
+      _controller = Get.find<BookmarkController>();
+    } catch (e) {
+      _controller = Get.put(sl<BookmarkController>());
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Refresh bookmarks when screen becomes visible
+    _controller.loadBookmarkedBooks();
   }
 
   @override
@@ -135,13 +147,26 @@ class _BookmarkPageState extends State<BookmarkPage> {
               _controller.removeBookmarkById(
                 book,
                 onSuccess: (message) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(message),
-                      backgroundColor: Colors.green.shade600,
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                        backgroundColor: Colors.green.shade600,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  }
+                },
+                onError: (message) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                        backgroundColor: Colors.red.shade600,
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  }
                 },
               );
             },

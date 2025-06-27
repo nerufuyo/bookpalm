@@ -2,12 +2,22 @@ import 'package:get/get.dart';
 import '../../domain/entities/book.dart';
 import '../../domain/usecases/get_books.dart';
 import '../../domain/usecases/bookmark_book.dart';
+import '../../domain/usecases/is_book_bookmarked.dart';
+import '../../domain/usecases/remove_bookmark.dart';
+import 'bookmark_controller.dart';
 
 class HomeController extends GetxController {
   final GetBooks getBooks;
   final BookmarkBook bookmarkBook;
+  final IsBookBookmarked isBookBookmarked;
+  final RemoveBookmark removeBookmark;
 
-  HomeController({required this.getBooks, required this.bookmarkBook});
+  HomeController({
+    required this.getBooks,
+    required this.bookmarkBook,
+    required this.isBookBookmarked,
+    required this.removeBookmark,
+  });
 
   // Observable states
   final RxList<Book> books = <Book>[].obs;
@@ -16,6 +26,7 @@ class HomeController extends GetxController {
   final RxString searchQuery = ''.obs;
   final RxBool hasMore = true.obs;
   final RxInt currentPage = 1.obs;
+  final RxSet<int> bookmarkedBookIds = <int>{}.obs;
 
   // Filter states
   final RxList<String> selectedLanguages = <String>[].obs;
@@ -71,7 +82,7 @@ class HomeController extends GetxController {
         errorMessage.value = failure.message;
         isLoading.value = false;
       },
-      (bookListResponse) {
+      (bookListResponse) async {
         if (isRefresh) {
           books.assignAll(bookListResponse.results);
         } else {
@@ -81,6 +92,9 @@ class HomeController extends GetxController {
         hasMore.value = bookListResponse.next != null;
         currentPage.value++;
         isLoading.value = false;
+
+        // Load bookmark statuses for new books
+        await loadBookmarkStatuses();
       },
     );
   }
@@ -115,6 +129,37 @@ class HomeController extends GetxController {
     Function(String)? onSuccess,
     Function(String)? onError,
   }) async {
+    final isCurrentlyBookmarked = bookmarkedBookIds.contains(book.id);
+
+    if (isCurrentlyBookmarked) {
+      final result = await removeBookmark(book.id);
+
+      result.fold(
+        (failure) {
+          if (onError != null) {
+            onError(failure.message);
+          }
+        },
+        (success) {
+          if (success) {
+            // Remove from bookmarked set
+            bookmarkedBookIds.remove(book.id);
+            // Also refresh bookmark controller if it exists
+            try {
+              final bookmarkController = Get.find<BookmarkController>();
+              bookmarkController.loadBookmarkedBooks();
+            } catch (e) {
+              // BookmarkController not initialized, ignore
+            }
+            if (onSuccess != null) {
+              onSuccess('Book removed from bookmarks');
+            }
+          }
+        },
+      );
+      return;
+    }
+
     final result = await bookmarkBook(book);
 
     result.fold(
@@ -124,11 +169,48 @@ class HomeController extends GetxController {
         }
       },
       (success) {
-        if (success && onSuccess != null) {
-          onSuccess('Book bookmarked successfully');
+        if (success) {
+          // Add to bookmarked set
+          bookmarkedBookIds.add(book.id);
+          // Also refresh bookmark controller if it exists
+          try {
+            final bookmarkController = Get.find<BookmarkController>();
+            bookmarkController.loadBookmarkedBooks();
+          } catch (e) {
+            // BookmarkController not initialized, ignore
+          }
+          if (onSuccess != null) {
+            onSuccess('Book bookmarked successfully');
+          }
         }
       },
     );
+  }
+
+  Future<void> checkBookmarkStatus(Book book) async {
+    final result = await isBookBookmarked(book.id);
+    result.fold(
+      (failure) {
+        // Handle error silently for bookmark status check
+      },
+      (isBookmarked) {
+        if (isBookmarked) {
+          bookmarkedBookIds.add(book.id);
+        } else {
+          bookmarkedBookIds.remove(book.id);
+        }
+      },
+    );
+  }
+
+  Future<void> loadBookmarkStatuses() async {
+    for (final book in books) {
+      await checkBookmarkStatus(book);
+    }
+  }
+
+  bool isBookmarked(Book book) {
+    return bookmarkedBookIds.contains(book.id);
   }
 
   void loadMoreBooks() {

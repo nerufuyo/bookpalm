@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 import '../../domain/entities/book.dart';
+import '../controllers/home_controller.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
@@ -20,9 +22,7 @@ class BookCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       elevation: 4,
       shadowColor: Colors.black.withValues(alpha: 0.1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -32,10 +32,7 @@ class BookCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.white,
-                Colors.grey.shade50,
-              ],
+              colors: [Colors.white, Colors.grey.shade50],
             ),
           ),
           child: Padding(
@@ -45,9 +42,9 @@ class BookCard extends StatelessWidget {
               children: [
                 // Book Cover
                 _buildBookCover(),
-                
+
                 const SizedBox(width: 16),
-                
+
                 // Book Details
                 Expanded(
                   child: Column(
@@ -63,9 +60,9 @@ class BookCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      
+
                       const SizedBox(height: 8),
-                      
+
                       if (book.authors.isNotEmpty)
                         Text(
                           'by ${book.authors.map((author) => author.name).join(', ')}',
@@ -77,9 +74,9 @@ class BookCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       if (book.subjects.isNotEmpty)
                         Wrap(
                           spacing: 6,
@@ -114,9 +111,9 @@ class BookCard extends StatelessWidget {
                             );
                           }).toList(),
                         ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       Row(
                         children: [
                           Container(
@@ -186,26 +183,37 @@ class BookCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 // Bookmark Button
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey.shade100,
-                  ),
-                  child: IconButton(
-                    onPressed: onBookmarkTap,
-                    icon: Icon(
-                      Icons.bookmark_border_rounded,
-                      color: Colors.grey.shade600,
-                      size: 22,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    constraints: const BoxConstraints(
-                      minWidth: 40,
-                      minHeight: 40,
-                    ),
-                  ),
+                GetX<HomeController>(
+                  builder: (controller) {
+                    final isBookmarked = controller.isBookmarked(book);
+                    return Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isBookmarked
+                            ? Colors.amber.shade100
+                            : Colors.grey.shade100,
+                      ),
+                      child: IconButton(
+                        onPressed: onBookmarkTap,
+                        icon: Icon(
+                          isBookmarked
+                              ? Icons.bookmark_rounded
+                              : Icons.bookmark_border_rounded,
+                          color: isBookmarked
+                              ? Colors.amber.shade700
+                              : Colors.grey.shade600,
+                          size: 22,
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        constraints: const BoxConstraints(
+                          minWidth: 40,
+                          minHeight: 40,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -218,14 +226,15 @@ class BookCard extends StatelessWidget {
   Widget _buildBookCover() {
     // Try to get the book cover image URL from formats
     String? imageUrl = book.formats['image/jpeg'];
-    
+
     return Container(
       width: 85,
       height: 130,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
-          BoxShadow(                          color: Colors.black.withValues(alpha: 0.15),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
             offset: const Offset(0, 4),
             blurRadius: 8,
             spreadRadius: 0,
@@ -262,18 +271,10 @@ class BookCard extends StatelessWidget {
       child: Stack(
         children: [
           // Background pattern
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _BookPatternPainter(),
-            ),
-          ),
+          Positioned.fill(child: CustomPaint(painter: _BookPatternPainter())),
           // Book icon
           const Center(
-            child: Icon(
-              Icons.menu_book_rounded,
-              size: 36,
-              color: Colors.white,
-            ),
+            child: Icon(Icons.menu_book_rounded, size: 36, color: Colors.white),
           ),
         ],
       ),
