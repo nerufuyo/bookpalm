@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart';
 import '../../domain/entities/book.dart';
-import '../controllers/home_controller.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
   final VoidCallback onTap;
   final VoidCallback onBookmarkTap;
+  final bool isBookmarked;
 
   const BookCard({
     super.key,
     required this.book,
     required this.onTap,
     required this.onBookmarkTap,
+    this.isBookmarked = false,
   });
 
   @override
@@ -185,36 +185,7 @@ class BookCard extends StatelessWidget {
                 ),
 
                 // Bookmark Button
-                GetX<HomeController>(
-                  builder: (controller) {
-                    final isBookmarked = controller.isBookmarked(book);
-                    return Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isBookmarked
-                            ? Colors.amber.shade100
-                            : Colors.grey.shade100,
-                      ),
-                      child: IconButton(
-                        onPressed: onBookmarkTap,
-                        icon: Icon(
-                          isBookmarked
-                              ? Icons.bookmark_rounded
-                              : Icons.bookmark_border_rounded,
-                          color: isBookmarked
-                              ? Colors.amber.shade700
-                              : Colors.grey.shade600,
-                          size: 22,
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        constraints: const BoxConstraints(
-                          minWidth: 40,
-                          minHeight: 40,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                _buildBookmarkButton(),
               ],
             ),
           ),
@@ -276,9 +247,7 @@ class BookCard extends StatelessWidget {
           // Background pattern
           Positioned.fill(child: CustomPaint(painter: _BookPatternPainter())),
           // Book icon
-          const Center(
-            child: Icon(Icons.menu_book_rounded, size: 36, color: Colors.white),
-          ),
+          const Center(child: Icon(Icons.book, size: 36, color: Colors.white)),
         ],
       ),
     );
@@ -287,10 +256,31 @@ class BookCard extends StatelessWidget {
   String _formatDownloadCount(int count) {
     if (count >= 1000000) {
       return '${(count / 1000000).toStringAsFixed(1)}M';
-    } else if (count >= 1000) {
+    } else if (count >= 5000) {
       return '${(count / 1000).toStringAsFixed(1)}K';
     }
     return count.toString();
+  }
+
+  Widget _buildBookmarkButton() {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isBookmarked ? Colors.red.shade50 : Colors.grey.shade100,
+      ),
+      child: GestureDetector(
+        onTap: onBookmarkTap,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+          child: Icon(
+            isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+            color: isBookmarked ? Colors.red.shade600 : Colors.grey.shade600,
+            size: 22,
+          ),
+        ),
+      ),
+    );
   }
 }
 

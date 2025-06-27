@@ -4,110 +4,268 @@ import '../../domain/usecases/get_book_by_id.dart';
 import '../../domain/usecases/bookmark_book.dart';
 import '../../domain/usecases/remove_bookmark.dart';
 import '../../domain/usecases/is_book_bookmarked.dart';
+import '../../core/logging/app_logger.dart';
 import 'home_controller.dart';
 import 'bookmark_controller.dart';
 
 class BookDetailController extends GetxController {
-  final GetBookById getBookById;
-  final BookmarkBook bookmarkBook;
-  final RemoveBookmark removeBookmark;
-  final IsBookBookmarked isBookBookmarked;
+  final GetBookById _getBookById;
+  final BookmarkBook _bookmarkBook;
+  final RemoveBookmark _removeBookmark;
+  final IsBookBookmarked _isBookBookmarked;
 
   BookDetailController({
-    required this.getBookById,
-    required this.bookmarkBook,
-    required this.removeBookmark,
-    required this.isBookBookmarked,
-  });
+    required GetBookById getBookById,
+    required BookmarkBook bookmarkBook,
+    required RemoveBookmark removeBookmark,
+    required IsBookBookmarked isBookBookmarked,
+  }) : _getBookById = getBookById,
+       _bookmarkBook = bookmarkBook,
+       _removeBookmark = removeBookmark,
+       _isBookBookmarked = isBookBookmarked;
 
   // Observable states
-  final Rxn<Book> book = Rxn<Book>();
-  final RxBool isLoading = false.obs;
-  final RxString errorMessage = ''.obs;
-  final RxBool isBookmarked = false.obs;
+  final Rxn<Book> _book = Rxn<Book>();
+  final RxBool _isLoading = false.obs;
+  final RxString _errorMessage = ''.obs;
+  final RxBool _isBookmarked = false.obs;
 
-  Future<void> loadBookDetails(int bookId) async {
-    isLoading.value = true;
-    errorMessage.value = '';
+  // Getters for read-only access
+  Book? get book => _book.value;
+  bool get isLoading => _isLoading.value;
+  String get errorMessage => _errorMessage.value;
+  bool get isBookmarked => _isBookmarked.value;
 
-    final result = await getBookById(bookId);
+  // Reactive getters for UI
+  Rxn<Book> get bookRx => _book;
+  RxBool get isLoadingRx => _isLoading;
+  RxString get errorMessageRx => _errorMessage;
+  RxBool get isBookmarkedRx => _isBookmarked;
 
-    result.fold(
-      (failure) {
-        errorMessage.value = failure.message;
-        isLoading.value = false;
-      },
-      (bookData) async {
-        book.value = bookData;
-        isLoading.value = false;
-        // Check bookmark status
-        await checkBookmarkStatus(bookId);
-      },
+  @override
+  void onInit() {
+    super.onInit();
+    AppLogger.instance.info(
+      'BookDetailController initialized',
+      tag: 'BookDetailController',
     );
   }
 
-  Future<void> checkBookmarkStatus(int bookId) async {
-    final result = await isBookBookmarked(bookId);
-    result.fold(
-      (failure) {
-        // Handle error silently
-      },
-      (bookmarked) {
-        isBookmarked.value = bookmarked;
-      },
+  @override
+  void onClose() {
+    AppLogger.instance.info(
+      'BookDetailController disposed',
+      tag: 'BookDetailController',
     );
+    super.onClose();
+  }
+
+  Future<void> loadBookDetails(int bookId) async {
+    final stopwatch = Stopwatch()..start();
+    AppLogger.instance.info(
+      'Loading book details for ID: $bookId',
+      tag: 'BookDetailController',
+    );
+
+    _isLoading.value = true;
+    _errorMessage.value = '';
+
+    try {
+      final result = await _getBookById(bookId);
+
+      result.fold(
+        (failure) {
+          AppLogger.instance.error(
+            'Failed to load book details: ${failure.message}',
+            tag: 'BookDetailController',
+          );
+          _errorMessage.value = failure.message;
+          _isLoading.value = false;
+        },
+        (bookData) async {
+          AppLogger.instance.info(
+            'Book details loaded successfully: ${bookData.title}',
+            tag: 'BookDetailController',
+          );
+          _book.value = bookData;
+          _isLoading.value = false;
+
+          // Check bookmark status asynchronously without blocking UI
+          await _checkBookmarkStatus(bookId);
+        },
+      );
+    } catch (error, stackTrace) {
+      AppLogger.instance.error(
+        'Unexpected error loading book details',
+        tag: 'BookDetailController',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      _errorMessage.value = 'An unexpected error occurred';
+      _isLoading.value = false;
+    } finally {
+      stopwatch.stop();
+      AppLogger.instance.debug(
+        'Book details loading completed in ${stopwatch.elapsedMilliseconds}ms',
+        tag: 'BookDetailController',
+      );
+    }
+  }
+
+  Future<void> _checkBookmarkStatus(int bookId) async {
+    AppLogger.instance.debug(
+      'Checking bookmark status for book ID: $bookId',
+      tag: 'BookDetailController',
+    );
+
+    try {
+      final result = await _isBookBookmarked(bookId);
+      result.fold(
+        (failure) {
+          AppLogger.instance.warning(
+            'Failed to check bookmark status: ${failure.message}',
+            tag: 'BookDetailController',
+          );
+          // Keep current bookmark state on error
+        },
+        (bookmarked) {
+          AppLogger.instance.debug(
+            'Bookmark status checked: $bookmarked',
+            tag: 'BookDetailController',
+          );
+          _isBookmarked.value = bookmarked;
+        },
+      );
+    } catch (error, stackTrace) {
+      AppLogger.instance.error(
+        'Unexpected error checking bookmark status',
+        tag: 'BookDetailController',
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   Future<void> toggleBookmark({
     Function(String)? onSuccess,
     Function(String)? onError,
   }) async {
-    if (book.value == null) return;
+    if (_book.value == null) {
+      AppLogger.instance.warning(
+        'Cannot toggle bookmark: book is null',
+        tag: 'BookDetailController',
+      );
+      return;
+    }
 
-    if (isBookmarked.value) {
-      // Remove bookmark
-      final result = await removeBookmark(book.value!.id);
-      result.fold(
-        (failure) {
-          if (onError != null) {
-            onError(failure.message);
-          }
-        },
-        (success) {
-          if (success) {
-            isBookmarked.value = false;
-            // Sync with other controllers
-            _syncWithOtherControllers(book.value!, false);
-            if (onSuccess != null) {
-              onSuccess('Book removed from bookmarks');
-            }
-          }
-        },
+    final book = _book.value!;
+    final wasBookmarked = _isBookmarked.value;
+    AppLogger.instance.info(
+      'Toggling bookmark for book: ${book.title} (current state: $wasBookmarked)',
+      tag: 'BookDetailController',
+    );
+
+    try {
+      if (wasBookmarked) {
+        await _removeBookmarkAction(book, onSuccess, onError);
+      } else {
+        await _addBookmarkAction(book, onSuccess, onError);
+      }
+    } catch (error, stackTrace) {
+      AppLogger.instance.error(
+        'Unexpected error toggling bookmark',
+        tag: 'BookDetailController',
+        error: error,
+        stackTrace: stackTrace,
       );
-    } else {
-      // Add bookmark
-      final result = await bookmarkBook(book.value!);
-      result.fold(
-        (failure) {
-          if (onError != null) {
-            onError(failure.message);
-          }
-        },
-        (success) {
-          if (success) {
-            isBookmarked.value = true;
-            // Sync with other controllers
-            _syncWithOtherControllers(book.value!, true);
-            if (onSuccess != null) {
-              onSuccess('Book bookmarked successfully');
-            }
-          }
-        },
-      );
+      onError?.call('An unexpected error occurred');
     }
   }
 
+  Future<void> _removeBookmarkAction(
+    Book book,
+    Function(String)? onSuccess,
+    Function(String)? onError,
+  ) async {
+    AppLogger.instance.debug(
+      'Removing bookmark for book: ${book.title}',
+      tag: 'BookDetailController',
+    );
+
+    final result = await _removeBookmark(book.id);
+    result.fold(
+      (failure) {
+        AppLogger.instance.error(
+          'Failed to remove bookmark: ${failure.message}',
+          tag: 'BookDetailController',
+        );
+        onError?.call(failure.message);
+      },
+      (success) {
+        if (success) {
+          AppLogger.instance.info(
+            'Bookmark removed successfully for book: ${book.title}',
+            tag: 'BookDetailController',
+          );
+          _isBookmarked.value = false;
+          _syncWithOtherControllers(book, false);
+          onSuccess?.call('Book removed from bookmarks');
+        } else {
+          AppLogger.instance.warning(
+            'Bookmark removal returned false',
+            tag: 'BookDetailController',
+          );
+          onError?.call('Failed to remove bookmark');
+        }
+      },
+    );
+  }
+
+  Future<void> _addBookmarkAction(
+    Book book,
+    Function(String)? onSuccess,
+    Function(String)? onError,
+  ) async {
+    AppLogger.instance.debug(
+      'Adding bookmark for book: ${book.title}',
+      tag: 'BookDetailController',
+    );
+
+    final result = await _bookmarkBook(book);
+    result.fold(
+      (failure) {
+        AppLogger.instance.error(
+          'Failed to add bookmark: ${failure.message}',
+          tag: 'BookDetailController',
+        );
+        onError?.call(failure.message);
+      },
+      (success) {
+        if (success) {
+          AppLogger.instance.info(
+            'Bookmark added successfully for book: ${book.title}',
+            tag: 'BookDetailController',
+          );
+          _isBookmarked.value = true;
+          _syncWithOtherControllers(book, true);
+          onSuccess?.call('Book bookmarked successfully');
+        } else {
+          AppLogger.instance.warning(
+            'Bookmark addition returned false',
+            tag: 'BookDetailController',
+          );
+          onError?.call('Failed to add bookmark');
+        }
+      },
+    );
+  }
+
   void _syncWithOtherControllers(Book book, bool bookmarked) {
+    AppLogger.instance.debug(
+      'Syncing bookmark state with other controllers',
+      tag: 'BookDetailController',
+    );
+
     try {
       final homeController = Get.find<HomeController>();
       if (bookmarked) {
@@ -115,15 +273,47 @@ class BookDetailController extends GetxController {
       } else {
         homeController.bookmarkedBookIds.remove(book.id);
       }
-    } catch (e) {
-      // HomeController not initialized, ignore
+      AppLogger.instance.debug(
+        'HomeController synced successfully',
+        tag: 'BookDetailController',
+      );
+    } catch (error) {
+      AppLogger.instance.debug(
+        'HomeController not found or not initialized',
+        tag: 'BookDetailController',
+      );
     }
 
     try {
       final bookmarkController = Get.find<BookmarkController>();
       bookmarkController.loadBookmarkedBooks();
-    } catch (e) {
-      // BookmarkController not initialized, ignore
+      AppLogger.instance.debug(
+        'BookmarkController synced successfully',
+        tag: 'BookDetailController',
+      );
+    } catch (error) {
+      AppLogger.instance.debug(
+        'BookmarkController not found or not initialized',
+        tag: 'BookDetailController',
+      );
     }
+  }
+
+  void refreshBookDetails() {
+    if (_book.value != null) {
+      AppLogger.instance.info(
+        'Refreshing book details for: ${_book.value!.title}',
+        tag: 'BookDetailController',
+      );
+      loadBookDetails(_book.value!.id);
+    }
+  }
+
+  void clearError() {
+    AppLogger.instance.debug(
+      'Clearing error message',
+      tag: 'BookDetailController',
+    );
+    _errorMessage.value = '';
   }
 }

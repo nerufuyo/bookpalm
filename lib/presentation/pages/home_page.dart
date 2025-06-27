@@ -117,42 +117,45 @@ class HomePage extends StatelessWidget {
                     }
 
                     final book = controller.books[index];
-                    return BookCard(
-                      book: book,
-                      onTap: () {
-                        context.push('/book/${book.id}');
-                      },
-                      onBookmarkTap: () {
-                        controller.toggleBookmark(
-                          book,
-                          onSuccess: (message) {
-                            try {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(message),
-                                  backgroundColor: Colors.green.shade600,
-                                  duration: const Duration(seconds: 2),
-                                ),
-                              );
-                            } catch (e) {
-                              // Widget tree might be disposed, ignore
-                            }
-                          },
-                          onError: (message) {
-                            try {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(message),
-                                  backgroundColor: Colors.red.shade600,
-                                  duration: const Duration(seconds: 3),
-                                ),
-                              );
-                            } catch (e) {
-                              // Widget tree might be disposed, ignore
-                            }
-                          },
-                        );
-                      },
+                    return Obx(
+                      () => BookCard(
+                        book: book,
+                        isBookmarked: controller.isBookmarked(book),
+                        onTap: () {
+                          context.push('/book/${book.id}');
+                        },
+                        onBookmarkTap: () {
+                          controller.toggleBookmark(
+                            book,
+                            onSuccess: (message) {
+                              try {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(message),
+                                    backgroundColor: Colors.green.shade600,
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+                              } catch (e) {
+                                // Widget tree might be disposed, ignore
+                              }
+                            },
+                            onError: (message) {
+                              try {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(message),
+                                    backgroundColor: Colors.red.shade600,
+                                    duration: const Duration(seconds: 3),
+                                  ),
+                                );
+                              } catch (e) {
+                                // Widget tree might be disposed, ignore
+                              }
+                            },
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
