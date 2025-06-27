@@ -19,6 +19,7 @@ import '../../domain/usecases/get_bookmarked_books.dart';
 import '../../domain/usecases/bookmark_book.dart';
 import '../../domain/usecases/is_book_bookmarked.dart';
 import '../../domain/usecases/remove_bookmark.dart';
+import '../../domain/usecases/get_book_by_id.dart';
 
 // Core
 import '../network/network_info.dart';
@@ -27,6 +28,7 @@ import '../network/network_info_impl.dart';
 // Controllers
 import '../../presentation/controllers/home_controller.dart';
 import '../../presentation/controllers/bookmark_controller.dart';
+import '../../presentation/controllers/book_detail_controller.dart';
 
 final sl = GetIt.instance;
 
@@ -49,12 +51,22 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton(
+    () => BookDetailController(
+      getBookById: sl(),
+      bookmarkBook: sl(),
+      removeBookmark: sl(),
+      isBookBookmarked: sl(),
+    ),
+  );
+
   //! Use cases
   sl.registerLazySingleton(() => GetBooks(sl()));
   sl.registerLazySingleton(() => GetBookmarkedBooks(sl()));
   sl.registerLazySingleton(() => BookmarkBook(sl()));
   sl.registerLazySingleton(() => IsBookBookmarked(sl()));
   sl.registerLazySingleton(() => RemoveBookmark(sl()));
+  sl.registerLazySingleton(() => GetBookById(sl()));
 
   //! Repository
   sl.registerLazySingleton<BookRepository>(
