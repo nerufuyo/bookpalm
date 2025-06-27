@@ -31,11 +31,11 @@ Map<String, dynamic> _$BookModelToJson(BookModel instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
   'subjects': instance.subjects,
-  'authors': instance.authors,
   'bookshelves': instance.bookshelves,
   'languages': instance.languages,
   'copyright': instance.copyright,
-  'media_type': instance.mediaType,
   'formats': instance.formats,
+  'authors': instance.authors,
+  'media_type': instance.mediaType,
   'download_count': instance.downloadCount,
 };

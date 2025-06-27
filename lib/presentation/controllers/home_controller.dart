@@ -6,6 +6,7 @@ import '../../domain/usecases/is_book_bookmarked.dart';
 import '../../domain/usecases/remove_bookmark.dart';
 import 'bookmark_controller.dart';
 
+/// Controls home page book listing, search, and filtering
 class HomeController extends GetxController {
   final GetBooks getBooks;
   final BookmarkBook bookmarkBook;
@@ -19,7 +20,6 @@ class HomeController extends GetxController {
     required this.removeBookmark,
   });
 
-  // Observable states
   final RxList<Book> books = <Book>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
@@ -28,13 +28,11 @@ class HomeController extends GetxController {
   final RxInt currentPage = 1.obs;
   final RxSet<int> bookmarkedBookIds = <int>{}.obs;
 
-  // Filter states
   final RxList<String> selectedLanguages = <String>[].obs;
   final RxString selectedSort = 'popular'.obs;
   final RxnInt authorYearStart = RxnInt();
   final RxnInt authorYearEnd = RxnInt();
 
-  // Book categories
   final RxString selectedCategory = 'popular'.obs;
   final List<String> categories = [
     'popular',
@@ -51,6 +49,7 @@ class HomeController extends GetxController {
     loadBooks();
   }
 
+  /// Loads books with current filters and search parameters
   Future<void> loadBooks({bool isRefresh = false}) async {
     if (isRefresh) {
       currentPage.value = 1;

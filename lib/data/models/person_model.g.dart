@@ -14,7 +14,7 @@ PersonModel _$PersonModelFromJson(Map<String, dynamic> json) => PersonModel(
 
 Map<String, dynamic> _$PersonModelToJson(PersonModel instance) =>
     <String, dynamic>{
+      'name': instance.name,
       'birth_year': instance.birthYear,
       'death_year': instance.deathYear,
-      'name': instance.name,
     };

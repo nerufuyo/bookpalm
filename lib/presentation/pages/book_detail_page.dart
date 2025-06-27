@@ -4,6 +4,8 @@ import '../controllers/book_detail_controller.dart';
 import '../../domain/entities/book.dart';
 import '../../domain/entities/person.dart';
 import '../../core/injection/injection_container.dart' as di;
+import '../../core/localization/localization_service.dart';
+import '../../core/logging/app_logger.dart';
 
 class BookDetailPage extends StatefulWidget {
   final String bookId;
@@ -21,30 +23,35 @@ class _BookDetailPageState extends State<BookDetailPage> {
   void initState() {
     super.initState();
     controller = Get.put(di.sl<BookDetailController>());
+    AppLogger.instance.info(
+      'BookDetailPage initialized',
+      tag: 'BookDetailPage',
+    );
     controller.loadBookDetails(int.parse(widget.bookId));
   }
 
   @override
   Widget build(BuildContext context) {
+    AppLogger.instance.debug('Building BookDetailPage', tag: 'BookDetailPage');
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: Obx(() {
-        if (controller.isLoading.value) {
+        if (controller.isLoadingRx.value) {
           return _buildLoadingWidget();
         }
 
-        if (controller.errorMessage.value.isNotEmpty) {
+        if (controller.errorMessageRx.value.isNotEmpty) {
           return _buildErrorWidget();
         }
 
-        if (controller.book.value == null) {
+        if (controller.bookRx.value == null) {
           return _buildNotFoundWidget();
         }
 
-        return _buildBookDetails(controller.book.value!);
+        return _buildBookDetails(controller.bookRx.value!);
       }),
       floatingActionButton: Obx(() {
-        if (controller.book.value != null && !controller.isLoading.value) {
+        if (controller.bookRx.value != null && !controller.isLoadingRx.value) {
           return _buildBookmarkFAB();
         }
         return const SizedBox.shrink();
@@ -53,15 +60,17 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   Widget _buildLoadingWidget() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(color: Colors.green),
-          SizedBox(height: 16),
+          const CircularProgressIndicator(color: Colors.green),
+          const SizedBox(height: 16),
           Text(
-            'Loading book details...',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            LocalizationService.instance.translate(
+              AppStrings.bookDetailLoading,
+            ),
+            style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ],
       ),
@@ -76,7 +85,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
           Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
-            'Failed to load book details',
+            LocalizationService.instance.translate(
+              AppStrings.bookDetailErrorTitle,
+            ),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -87,7 +98,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              controller.errorMessage.value,
+              controller.errorMessageRx.value,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
@@ -104,7 +115,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text('Retry'),
+            child: Text(
+              LocalizationService.instance.translate(
+                AppStrings.bookDetailRetryButton,
+              ),
+            ),
           ),
         ],
       ),
@@ -119,7 +134,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
           Icon(Icons.book_outlined, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
-            'Book not found',
+            LocalizationService.instance.translate(
+              AppStrings.bookDetailNotFoundTitle,
+            ),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -128,7 +145,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            'The requested book could not be found.',
+            LocalizationService.instance.translate(
+              AppStrings.bookDetailNotFoundMessage,
+            ),
             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
           ),
         ],
@@ -278,7 +297,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Text(
-                '${book.downloadCount} downloads',
+                '${book.downloadCount} ${LocalizationService.instance.translate(AppStrings.bookDetailDownloads)}',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.blue[700],
@@ -310,7 +329,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Icon(Icons.person, size: 20, color: Colors.blue[700]),
                 const SizedBox(width: 8),
                 Text(
-                  book.authors.length > 1 ? 'Authors' : 'Author',
+                  book.authors.length > 1
+                      ? LocalizationService.instance.translate(
+                          AppStrings.bookDetailAuthors,
+                        )
+                      : LocalizationService.instance.translate(
+                          AppStrings.bookDetailAuthor,
+                        ),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -385,7 +410,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Icon(Icons.description, size: 20, color: Colors.green[700]),
                 const SizedBox(width: 8),
                 Text(
-                  'About This Book',
+                  LocalizationService.instance.translate(
+                    AppStrings.bookDetailAboutThisBook,
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -586,7 +613,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
               Icon(Icons.topic_outlined, size: 16, color: Colors.blue[700]),
               const SizedBox(width: 6),
               Text(
-                'Key Themes & Topics',
+                LocalizationService.instance.translate(
+                  AppStrings.bookDetailKeyThemesTopics,
+                ),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -664,7 +693,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Icon(Icons.info_outline, size: 20, color: Colors.orange[700]),
                 const SizedBox(width: 8),
                 Text(
-                  'Publication Information',
+                  LocalizationService.instance.translate(
+                    AppStrings.bookDetailPublicationInformation,
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -732,7 +763,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Icon(Icons.language, size: 20, color: Colors.purple[700]),
                 const SizedBox(width: 8),
                 Text(
-                  'Languages',
+                  LocalizationService.instance.translate(
+                    AppStrings.bookDetailLanguages,
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -964,7 +997,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Icon(Icons.file_download, size: 20, color: Colors.blue[700]),
                 const SizedBox(width: 8),
                 Text(
-                  'Available Formats',
+                  LocalizationService.instance.translate(
+                    AppStrings.bookDetailAvailableFormats,
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -1142,7 +1177,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Icon(Icons.analytics, size: 20, color: Colors.purple[700]),
                 const SizedBox(width: 8),
                 Text(
-                  'Reading Statistics',
+                  LocalizationService.instance.translate(
+                    AppStrings.bookDetailReadingStatistics,
+                  ),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -1153,7 +1190,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
             ),
             const SizedBox(height: 16),
             _buildStatisticCard(
-              'Total Downloads',
+              LocalizationService.instance.translate(
+                AppStrings.bookDetailTotalDownloads,
+              ),
               _formatNumber(book.downloadCount),
               Icons.download,
               Colors.green,
@@ -1340,17 +1379,23 @@ class _BookDetailPageState extends State<BookDetailPage> {
             },
           );
         },
-        backgroundColor: controller.isBookmarked.value
+        backgroundColor: controller.isBookmarkedRx.value
             ? Colors.red
             : Colors.green,
         foregroundColor: Colors.white,
         icon: Icon(
-          controller.isBookmarked.value
+          controller.isBookmarkedRx.value
               ? Icons.bookmark_remove
               : Icons.bookmark_add,
         ),
         label: Text(
-          controller.isBookmarked.value ? 'Remove' : 'Bookmark',
+          controller.isBookmarkedRx.value
+              ? LocalizationService.instance.translate(
+                  AppStrings.bookDetailBookmarkRemove,
+                )
+              : LocalizationService.instance.translate(
+                  AppStrings.bookDetailBookmarkAdd,
+                ),
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       );
