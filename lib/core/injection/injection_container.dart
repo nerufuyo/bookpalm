@@ -24,6 +24,8 @@ import '../../domain/usecases/get_book_by_id.dart';
 // Core
 import '../network/network_info.dart';
 import '../network/network_info_impl.dart';
+import '../database/database_helper.dart';
+import '../services/connection_service.dart';
 
 // Controllers
 import '../../presentation/controllers/home_controller.dart';
@@ -83,11 +85,14 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<BookLocalDataSource>(
-    () => BookLocalDataSourceImpl(sharedPreferences: sl()),
+    () =>
+        BookLocalDataSourceImpl(sharedPreferences: sl(), databaseHelper: sl()),
   );
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton(() => DatabaseHelper.instance);
+  sl.registerLazySingleton(() => ConnectionService());
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();

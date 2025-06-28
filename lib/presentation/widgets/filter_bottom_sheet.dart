@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../core/localization/localization_service.dart';
+import '../../core/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   final HomeController controller;
 
-  const FilterBottomSheet({
-    super.key,
-    required this.controller,
-  });
+  const FilterBottomSheet({super.key, required this.controller});
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
@@ -15,11 +14,22 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   final List<String> availableLanguages = [
-    'en', 'fr', 'de', 'es', 'it', 'pt', 'ru', 'zh', 'ja', 'ar'
+    'en',
+    'fr',
+    'de',
+    'es',
+    'it',
+    'pt',
+    'ru',
+    'zh',
+    'ja',
+    'ar',
   ];
-  
+
   final List<String> availableSortOptions = [
-    'popular', 'ascending', 'descending'
+    'popular',
+    'ascending',
+    'descending',
   ];
 
   List<String> selectedLanguages = [];
@@ -41,9 +51,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -53,11 +63,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Filters',
+              Text(
+                LocalizationService.instance.translate(
+                  'widgets.filterBottomSheet.title',
+                ),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: AppColors.grey800,
                 ),
               ),
               TextButton(
@@ -69,19 +82,27 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     authorYearEnd = null;
                   });
                 },
-                child: const Text('Clear All'),
+                child: Text(
+                  LocalizationService.instance.translate(
+                    'widgets.filterBottomSheet.clearAll',
+                  ),
+                  style: TextStyle(color: AppColors.primary),
+                ),
               ),
             ],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Languages Filter
-          const Text(
-            'Languages',
+          Text(
+            LocalizationService.instance.translate(
+              'widgets.filterBottomSheet.languages',
+            ),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
+              color: AppColors.grey800,
             ),
           ),
           const SizedBox(height: 12),
@@ -94,7 +115,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 label: Text(
                   _getLanguageDisplayName(language),
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.grey[700],
+                    color: isSelected ? AppColors.white : AppColors.grey700,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 selected: isSelected,
@@ -107,27 +129,43 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     }
                   });
                 },
-                selectedColor: Colors.blue,
-                backgroundColor: Colors.grey[200],
-                checkmarkColor: Colors.white,
+                selectedColor: AppColors.primary,
+                backgroundColor: AppColors.accentWithOpacity(0.1),
+                checkmarkColor: AppColors.white,
+                side: BorderSide(
+                  color: isSelected ? AppColors.primary : AppColors.accent,
+                  width: 1,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               );
             }).toList(),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Sort Filter
-          const Text(
-            'Sort by',
+          Text(
+            LocalizationService.instance.translate(
+              'widgets.filterBottomSheet.sortBy',
+            ),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
+              color: AppColors.grey800,
             ),
           ),
           const SizedBox(height: 12),
           ...availableSortOptions.map((option) {
             return RadioListTile<String>(
-              title: Text(_getSortDisplayName(option)),
+              title: Text(
+                _getSortDisplayName(option),
+                style: TextStyle(
+                  color: AppColors.grey800,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               value: option,
               groupValue: selectedSort,
               onChanged: (value) {
@@ -137,17 +175,21 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               },
               dense: true,
               contentPadding: EdgeInsets.zero,
+              activeColor: AppColors.primary,
             );
           }),
-          
+
           const SizedBox(height: 24),
-          
+
           // Author Birth Year Filter
-          const Text(
-            'Author Birth Year Range',
+          Text(
+            LocalizationService.instance.translate(
+              'widgets.filterBottomSheet.authorYearRange',
+            ),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
+              color: AppColors.grey800,
             ),
           ),
           const SizedBox(height: 12),
@@ -155,11 +197,27 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             children: [
               Expanded(
                 child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'From Year',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: LocalizationService.instance.translate(
+                      'widgets.filterBottomSheet.fromYear',
+                    ),
+                    labelStyle: TextStyle(color: AppColors.grey600),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: AppColors.grey300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: AppColors.primary,
+                        width: 2,
+                      ),
+                    ),
                     isDense: true,
+                    filled: true,
+                    fillColor: AppColors.grey50,
                   ),
+                  style: TextStyle(color: AppColors.grey800),
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     authorYearStart = int.tryParse(value);
@@ -172,11 +230,27 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               const SizedBox(width: 16),
               Expanded(
                 child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'To Year',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: LocalizationService.instance.translate(
+                      'widgets.filterBottomSheet.toYear',
+                    ),
+                    labelStyle: TextStyle(color: AppColors.grey600),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: AppColors.grey300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: AppColors.primary,
+                        width: 2,
+                      ),
+                    ),
                     isDense: true,
+                    filled: true,
+                    fillColor: AppColors.grey50,
                   ),
+                  style: TextStyle(color: AppColors.grey800),
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     authorYearEnd = int.tryParse(value);
@@ -188,9 +262,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Apply Button
           SizedBox(
             width: double.infinity,
@@ -205,23 +279,28 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
+                elevation: 2,
+                shadowColor: AppColors.primaryWithOpacity(0.3),
               ),
-              child: const Text(
-                'Apply Filters',
+              child: Text(
+                LocalizationService.instance.translate(
+                  'widgets.filterBottomSheet.applyFilters',
+                ),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: AppColors.white,
                 ),
               ),
             ),
           ),
-          
+
           // Safe area padding
           SizedBox(height: MediaQuery.of(context).padding.bottom),
         ],
@@ -230,42 +309,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   }
 
   String _getLanguageDisplayName(String language) {
-    switch (language) {
-      case 'en':
-        return 'English';
-      case 'fr':
-        return 'French';
-      case 'de':
-        return 'German';
-      case 'es':
-        return 'Spanish';
-      case 'it':
-        return 'Italian';
-      case 'pt':
-        return 'Portuguese';
-      case 'ru':
-        return 'Russian';
-      case 'zh':
-        return 'Chinese';
-      case 'ja':
-        return 'Japanese';
-      case 'ar':
-        return 'Arabic';
-      default:
-        return language.toUpperCase();
-    }
+    return LocalizationService.instance.translate(
+      'widgets.filterBottomSheet.languageNames.$language',
+    );
   }
 
   String _getSortDisplayName(String sort) {
-    switch (sort) {
-      case 'popular':
-        return 'Most Popular';
-      case 'ascending':
-        return 'ID Ascending';
-      case 'descending':
-        return 'ID Descending';
-      default:
-        return sort;
-    }
+    return LocalizationService.instance.translate(
+      'widgets.filterBottomSheet.sortOptions.$sort',
+    );
   }
 }

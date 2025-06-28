@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
-class LocalizationService {
+class LocalizationService extends GetxController {
   static LocalizationService? _instance;
   static LocalizationService get instance =>
       _instance ??= LocalizationService._();
@@ -9,15 +12,33 @@ class LocalizationService {
   LocalizationService._();
 
   Map<String, dynamic> _localizedStrings = {};
-  String _currentLanguage = 'en';
+  final RxString _currentLanguage = 'en'.obs;
+
+  // Available languages
+  final Map<String, String> supportedLanguages = {
+    'en': 'English',
+    'id': 'Indonesian',
+    'de': 'German',
+    'ja': 'Japanese',
+    'zh': 'Chinese',
+    'ko': 'Korean',
+  };
 
   Future<void> loadLanguage(String languageCode) async {
-    _currentLanguage = languageCode;
+    _currentLanguage.value = languageCode;
     try {
       final String jsonString = await rootBundle.loadString(
         'assets/translations/$languageCode.json',
       );
       _localizedStrings = json.decode(jsonString);
+
+      // Save to preferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('selected_language', languageCode);
+
+      // Update GetX locale
+      final locale = _getLocaleFromLanguageCode(languageCode);
+      Get.updateLocale(locale);
     } catch (e) {
       // Fallback to English if the language file doesn't exist
       final String jsonString = await rootBundle.loadString(
@@ -27,7 +48,40 @@ class LocalizationService {
     }
   }
 
-  String translate(String key) {
+  Future<void> loadSavedLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedLanguage = prefs.getString('selected_language') ?? 'en';
+    await loadLanguage(savedLanguage);
+  }
+
+  Future<void> changeLanguage(String languageCode) async {
+    if (supportedLanguages.containsKey(languageCode)) {
+      await loadLanguage(languageCode);
+      // Trigger reactive updates for all listening widgets
+      update();
+    }
+  }
+
+  Locale _getLocaleFromLanguageCode(String languageCode) {
+    switch (languageCode) {
+      case 'en':
+        return const Locale('en', 'US');
+      case 'id':
+        return const Locale('id', 'ID');
+      case 'de':
+        return const Locale('de', 'DE');
+      case 'ja':
+        return const Locale('ja', 'JP');
+      case 'zh':
+        return const Locale('zh', 'CN');
+      case 'ko':
+        return const Locale('ko', 'KR');
+      default:
+        return const Locale('en', 'US');
+    }
+  }
+
+  String translate(String key, [Map<String, dynamic>? params]) {
     final keys = key.split('.');
     dynamic value = _localizedStrings;
 
@@ -39,15 +93,26 @@ class LocalizationService {
       }
     }
 
-    return value.toString();
+    String result = value.toString();
+
+    // Replace parameters if provided
+    if (params != null) {
+      params.forEach((paramKey, paramValue) {
+        result = result.replaceAll('{$paramKey}', paramValue.toString());
+      });
+    }
+
+    return result;
   }
 
-  String get currentLanguage => _currentLanguage;
+  String get currentLanguage => _currentLanguage.value;
 }
 
 // Extension for easier usage
 extension LocalizationExtension on String {
   String get tr => LocalizationService.instance.translate(this);
+  String trParams(Map<String, dynamic> params) =>
+      LocalizationService.instance.translate(this, params);
 }
 
 // Generated constants for type safety

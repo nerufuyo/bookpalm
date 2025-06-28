@@ -198,7 +198,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
       elevation: 0,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
-          color: Colors.grey[100],
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.green.withValues(alpha: 0.15), Colors.grey[100]!],
+            ),
+          ),
           child: Center(
             child: Hero(
               tag: 'book-${book.id}',
@@ -1346,7 +1352,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   Widget _buildBookmarkFAB() {
     return Obx(() {
-      return FloatingActionButton.extended(
+      return FloatingActionButton(
         onPressed: () {
           controller.toggleBookmark(
             onSuccess: (message) {
@@ -1383,20 +1389,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
             ? Colors.red
             : Colors.green,
         foregroundColor: Colors.white,
-        icon: Icon(
+        child: Icon(
           controller.isBookmarkedRx.value
               ? Icons.bookmark_remove
               : Icons.bookmark_add,
-        ),
-        label: Text(
-          controller.isBookmarkedRx.value
-              ? LocalizationService.instance.translate(
-                  AppStrings.bookDetailBookmarkRemove,
-                )
-              : LocalizationService.instance.translate(
-                  AppStrings.bookDetailBookmarkAdd,
-                ),
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          size: 24,
         ),
       );
     });

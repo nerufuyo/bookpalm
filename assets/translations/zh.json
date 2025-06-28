@@ -1,0 +1,159 @@
+{
+  "app": {
+    "name": "BookPalm",
+    "tagline": "您的数字图书馆"
+  },
+  "navigation": {
+    "home": "首页",
+    "bookmarks": "书签",
+    "settings": "设置"
+  },
+  "pages": {
+    "home": {
+      "title": "BookPalm",
+      "retry": "重试",
+      "noBooksFound": "未找到书籍",
+      "searchHint": "搜索书籍、作者..."
+    },
+    "bookmarks": {
+      "title": "书签",
+      "tryAgain": "重试"
+    }
+  },
+  "widgets": {
+    "emptyBookmarks": {
+      "title": "暂无书签",
+      "description": "开始探索书籍，将您的最爱添加书签以便随时查看。",
+      "browseBooks": "浏览书籍"
+    },
+    "bookmarkCard": {
+      "removeTitle": "移除书签",
+      "removeMessage": "您确定要从书签中移除\"{title}\"吗？",
+      "cancel": "取消",
+      "remove": "移除",
+      "by": "作者："
+    },
+    "filterBottomSheet": {
+      "title": "筛选器",
+      "clearAll": "清除全部",
+      "languages": "语言",
+      "sortBy": "排序方式",
+      "authorYearRange": "作者出生年份范围",
+      "fromYear": "起始年份",
+      "toYear": "结束年份",
+      "applyFilters": "应用筛选器",
+      "sortOptions": {
+        "popular": "最受欢迎",
+        "ascending": "ID升序",
+        "descending": "ID降序"
+      },
+      "languageNames": {
+        "en": "英语",
+        "fr": "法语",
+        "de": "德语",
+        "es": "西班牙语",
+        "it": "意大利语",
+        "pt": "葡萄牙语",
+        "ru": "俄语",
+        "zh": "中文",
+        "ja": "日语",
+        "ar": "阿拉伯语"
+      }
+    }
+  },
+  "snackbars": {
+    "cacheStatsLoadFailed": "加载缓存统计失败：{error}",
+    "cacheClearSuccess": "缓存清理成功",
+    "cacheClearFailed": "清理缓存失败：{error}",
+    "oldCacheClearSuccess": "旧缓存清理成功",
+    "oldCacheClearFailed": "清理旧缓存失败：{error}",
+    "languageChangeSuccess": "语言更改成功",
+    "languageChangeFailed": "更改语言失败：{error}",
+    "connectionRestored": "连接已恢复。正在同步数据...",
+    "noConnection": "无网络连接。正在使用离线数据。"
+  },
+  "dialogs": {
+    "clearCache": {
+      "title": "清理缓存",
+      "content": "这将删除所有缓存的书籍和搜索结果。您将需要网络连接才能再次浏览书籍。您的书签不会受到影响。\n\n您确定要继续吗？",
+      "cancel": "取消",
+      "confirm": "清理缓存"
+    }
+  },
+  "bookDetail": {
+    "loading": "正在加载图书详情...",
+    "errorTitle": "加载图书失败",
+    "errorMessage": "无法加载图书详情。请检查您的连接并重试。",
+    "retryButton": "重试",
+    "notFoundTitle": "找不到图书",
+    "notFoundMessage": "找不到请求的图书。",
+    "aboutThisBook": "关于这本书",
+    "authorDetails": "作者详情",
+    "authors": "作者",
+    "author": "作者",
+    "publicationInformation": "出版信息",
+    "bookId": "图书ID",
+    "mediaType": "媒体类型",
+    "downloads": "下载次数",
+    "downloadsTimes": "次",
+    "copyrightStatus": "版权状态",
+    "copyrighted": "有版权",
+    "publicDomain": "公共领域",
+    "languages": "语言",
+    "keyThemesTopics": "主要主题和话题",
+    "culturalHeritage": "文化遗产",
+    "culturalHeritageDescription": "作为公共领域作品，这本书代表了我们共同文化遗产的一部分。最初在现代版权限制之前的时代出版，现在属于人类，可以被所有人自由分享、研究和享受。",
+    "availableFormats": "可用格式",
+    "formatRecommendations": "格式推荐",
+    "formatRecommendationText": "为了获得最佳阅读体验：电子阅读器使用EPUB，网络浏览器使用HTML，打印使用PDF。所有格式均可免费下载和使用。",
+    "readingStatistics": "阅读统计",
+    "totalDownloads": "总下载量",
+    "popularityRank": "受欢迎程度排名",
+    "readingInformation": "阅读信息",
+    "bookmarkAdd": "书签",
+    "bookmarkRemove": "移除",
+    "bookmarkAdded": "图书已成功添加书签",
+    "bookmarkRemoved": "图书已从书签中移除"
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "languageDescription": "选择应用程序语言",
+    "connectionStatus": "连接状态",
+    "connected": "已连接到互联网",
+    "offline": "离线",
+    "offlineMessage": "离线时您仍可以浏览缓存的图书和书签。",
+    "cacheManagement": "缓存管理",
+    "cachedBooks": "缓存图书",
+    "cachedSearches": "缓存搜索",
+    "refreshCacheStats": "刷新缓存统计",
+    "clearAllCache": "清除所有缓存",
+    "offlineFeatures": "离线功能",
+    "offlineFeaturesDescription": "BookPalm自动缓存图书和搜索结果以供离线查看。离线时，您仍可以：",
+    "browseCachedBooks": "浏览之前查看的图书",
+    "accessBookmarks": "访问您的书签",
+    "viewCachedSearches": "查看缓存的搜索结果",
+    "readBookDetails": "阅读图书详情",
+    "newContentNote": "注意：新内容需要互联网连接。"
+  },
+  "languages": {
+    "en": "英语",
+    "id": "印尼语",
+    "de": "德语",
+    "ja": "日语",
+    "zh": "中文",
+    "ko": "韩语"
+  },
+  "categories": {
+    "popular": "热门",
+    "fiction": "小说",
+    "history": "历史",
+    "science": "科学",
+    "philosophy": "哲学",
+    "children": "儿童"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "您的数字图书馆"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "app": {
+    "name": "BookPalm",
+    "tagline": "당신의 디지털 도서관"
+  },
+  "navigation": {
+    "home": "홈",
+    "bookmarks": "북마크",
+    "settings": "설정"
+  },
+  "pages": {
+    "home": {
+      "title": "BookPalm",
+      "retry": "재시도",
+      "noBooksFound": "책을 찾을 수 없습니다",
+      "searchHint": "책, 저자 검색..."
+    },
+    "bookmarks": {
+      "title": "북마크",
+      "tryAgain": "다시 시도"
+    }
+  },
+  "widgets": {
+    "emptyBookmarks": {
+      "title": "북마크가 없습니다",
+      "description": "책을 탐색하고 즐겨찾는 책을 북마크하여 편리하게 보관하세요.",
+      "browseBooks": "책 둘러보기"
+    },
+    "bookmarkCard": {
+      "removeTitle": "북마크 제거",
+      "removeMessage": "북마크에서 \"{title}\"을(를) 제거하시겠습니까?",
+      "cancel": "취소",
+      "remove": "제거",
+      "by": "저자:"
+    },
+    "filterBottomSheet": {
+      "title": "필터",
+      "clearAll": "모두 지우기",
+      "languages": "언어",
+      "sortBy": "정렬 기준",
+      "authorYearRange": "작가 출생 연도 범위",
+      "fromYear": "시작 연도",
+      "toYear": "끝 연도",
+      "applyFilters": "필터 적용",
+      "sortOptions": {
+        "popular": "인기순",
+        "ascending": "ID 오름차순",
+        "descending": "ID 내림차순"
+      },
+      "languageNames": {
+        "en": "영어",
+        "fr": "프랑스어",
+        "de": "독일어",
+        "es": "스페인어",
+        "it": "이탈리아어",
+        "pt": "포르투갈어",
+        "ru": "러시아어",
+        "zh": "중국어",
+        "ja": "일본어",
+        "ar": "아랍어"
+      }
+    }
+  },
+  "snackbars": {
+    "cacheStatsLoadFailed": "캐시 통계 로드 실패: {error}",
+    "cacheClearSuccess": "캐시가 성공적으로 지워졌습니다",
+    "cacheClearFailed": "캐시 지우기 실패: {error}",
+    "oldCacheClearSuccess": "오래된 캐시가 성공적으로 지워졌습니다",
+    "oldCacheClearFailed": "오래된 캐시 지우기 실패: {error}",
+    "languageChangeSuccess": "언어가 성공적으로 변경되었습니다",
+    "languageChangeFailed": "언어 변경 실패: {error}",
+    "connectionRestored": "연결이 복원되었습니다. 데이터를 동기화하는 중...",
+    "noConnection": "인터넷 연결이 없습니다. 오프라인 데이터를 사용하고 있습니다."
+  },
+  "dialogs": {
+    "clearCache": {
+      "title": "캐시 지우기",
+      "content": "모든 캐시된 책과 검색 결과가 제거됩니다. 다시 책을 탐색하려면 인터넷 연결이 필요합니다. 북마크는 영향을 받지 않습니다.\n\n계속하시겠습니까?",
+      "cancel": "취소",
+      "confirm": "캐시 지우기"
+    }
+  },
+  "bookDetail": {
+    "loading": "도서 세부 정보를 불러오는 중...",
+    "errorTitle": "도서 로드 실패",
+    "errorMessage": "도서 세부 정보를 불러올 수 없습니다. 연결을 확인하고 다시 시도해 주세요.",
+    "retryButton": "다시 시도",
+    "notFoundTitle": "도서를 찾을 수 없음",
+    "notFoundMessage": "요청한 도서를 찾을 수 없습니다.",
+    "aboutThisBook": "이 책에 대해",
+    "authorDetails": "저자 세부 정보",
+    "authors": "저자들",
+    "author": "저자",
+    "publicationInformation": "출판 정보",
+    "bookId": "도서 ID",
+    "mediaType": "미디어 유형",
+    "downloads": "다운로드",
+    "downloadsTimes": "회",
+    "copyrightStatus": "저작권 상태",
+    "copyrighted": "저작권 보호",
+    "publicDomain": "퍼블릭 도메인",
+    "languages": "언어",
+    "keyThemesTopics": "주요 테마 및 주제",
+    "culturalHeritage": "문화 유산",
+    "culturalHeritageDescription": "퍼블릭 도메인 작품으로서, 이 책은 우리 공동 문화 유산의 일부를 나타냅니다. 현대 저작권 제한 이전 시대에 최초로 출판되어, 이제 인류의 것이 되어 모든 사람이 자유롭게 공유하고, 연구하고, 즐길 수 있습니다.",
+    "availableFormats": "사용 가능한 형식",
+    "formatRecommendations": "형식 권장 사항",
+    "formatRecommendationText": "최상의 읽기 경험을 위해: 전자책 리더기용 EPUB, 웹 브라우저용 HTML, 인쇄용 PDF. 모든 형식을 무료로 다운로드하고 사용할 수 있습니다.",
+    "readingStatistics": "읽기 통계",
+    "totalDownloads": "총 다운로드",
+    "popularityRank": "인기 순위",
+    "readingInformation": "읽기 정보",
+    "bookmarkAdd": "북마크",
+    "bookmarkRemove": "제거",
+    "bookmarkAdded": "도서가 성공적으로 북마크되었습니다",
+    "bookmarkRemoved": "북마크에서 도서가 제거되었습니다"
+  },
+  "settings": {
+    "title": "설정",
+    "language": "언어",
+    "languageDescription": "애플리케이션 언어 선택",
+    "connectionStatus": "연결 상태",
+    "connected": "인터넷에 연결됨",
+    "offline": "오프라인",
+    "offlineMessage": "오프라인 상태에서도 캐시된 도서와 북마크를 탐색할 수 있습니다.",
+    "cacheManagement": "캐시 관리",
+    "cachedBooks": "캐시된 도서",
+    "cachedSearches": "캐시된 검색",
+    "refreshCacheStats": "캐시 통계 새로고침",
+    "clearAllCache": "모든 캐시 지우기",
+    "offlineFeatures": "오프라인 기능",
+    "offlineFeaturesDescription": "BookPalm은 오프라인 보기를 위해 자동으로 도서와 검색 결과를 캐시합니다. 오프라인 상태에서도 다음을 할 수 있습니다:",
+    "browseCachedBooks": "이전에 본 도서 탐색",
+    "accessBookmarks": "북마크 액세스",
+    "viewCachedSearches": "캐시된 검색 결과 보기",
+    "readBookDetails": "도서 세부 정보 읽기",
+    "newContentNote": "참고: 새 콘텐츠는 인터넷 연결이 필요합니다."
+  },
+  "languages": {
+    "en": "영어",
+    "id": "인도네시아어",
+    "de": "독일어",
+    "ja": "일본어",
+    "zh": "중국어",
+    "ko": "한국어"
+  },
+  "categories": {
+    "popular": "인기",
+    "fiction": "소설",
+    "history": "역사",
+    "science": "과학",
+    "philosophy": "철학",
+    "children": "어린이"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "당신의 디지털 도서관"
+  }
+}
