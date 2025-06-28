@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/theme/app_colors.dart';
 import '../../domain/entities/book.dart';
 
 class BookCard extends StatelessWidget {
@@ -90,13 +91,13 @@ class BookCard extends StatelessWidget {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Colors.blue.shade100,
-                                    Colors.blue.shade50,
+                                    AppColors.secondaryWithOpacity(0.3),
+                                    AppColors.secondaryWithOpacity(0.1),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: Colors.blue.shade200,
+                                  color: AppColors.secondary,
                                   width: 0.5,
                                 ),
                               ),
@@ -105,7 +106,7 @@ class BookCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.blue.shade700,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             );
@@ -235,11 +236,7 @@ class BookCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.indigo.shade300,
-            Colors.blue.shade400,
-            Colors.purple.shade300,
-          ],
+          colors: [AppColors.primary, AppColors.secondary, AppColors.accent],
         ),
       ),
       child: Stack(
@@ -247,7 +244,9 @@ class BookCard extends StatelessWidget {
           // Background pattern
           Positioned.fill(child: CustomPaint(painter: _BookPatternPainter())),
           // Book icon
-          const Center(child: Icon(Icons.book, size: 36, color: Colors.white)),
+          const Center(
+            child: Icon(Icons.book, size: 36, color: AppColors.white),
+          ),
         ],
       ),
     );
@@ -266,7 +265,9 @@ class BookCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isBookmarked ? Colors.red.shade50 : Colors.grey.shade100,
+        color: isBookmarked
+            ? AppColors.error.withValues(alpha: 0.1)
+            : AppColors.grey100,
       ),
       child: GestureDetector(
         onTap: onBookmarkTap,
@@ -275,7 +276,7 @@ class BookCard extends StatelessWidget {
           constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
           child: Icon(
             isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-            color: isBookmarked ? Colors.red.shade600 : Colors.grey.shade600,
+            color: isBookmarked ? AppColors.error : AppColors.grey600,
             size: 22,
           ),
         ),
@@ -288,7 +289,7 @@ class _BookPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.1)
+      ..color = AppColors.white.withValues(alpha: 0.1)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 

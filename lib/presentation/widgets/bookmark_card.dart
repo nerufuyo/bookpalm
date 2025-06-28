@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/localization/localization_service.dart';
+import '../../core/theme/app_colors.dart';
 import '../../domain/entities/book.dart';
 
 class BookmarkCard extends StatelessWidget {
@@ -20,7 +21,7 @@ class BookmarkCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       elevation: 4,
-      shadowColor: Colors.black.withValues(alpha: 0.1),
+      shadowColor: AppColors.primaryWithOpacity(0.1),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: onTap,
@@ -31,7 +32,10 @@ class BookmarkCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Colors.white, Colors.amber.shade50],
+              colors: [
+                AppColors.background,
+                AppColors.highlightWithOpacity(0.1),
+              ],
             ),
           ),
           child: Padding(
@@ -51,10 +55,10 @@ class BookmarkCard extends StatelessWidget {
                     children: [
                       Text(
                         book.title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: AppColors.grey800,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -67,7 +71,7 @@ class BookmarkCard extends StatelessWidget {
                           '${LocalizationService.instance.translate('widgets.bookmarkCard.by')} ${book.authors.map((author) => author.name).join(', ')}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[600],
+                            color: AppColors.grey600,
                             fontStyle: FontStyle.italic,
                           ),
                           maxLines: 1,
@@ -89,13 +93,13 @@ class BookmarkCard extends StatelessWidget {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Colors.amber.shade100,
-                                    Colors.amber.shade50,
+                                    AppColors.accentWithOpacity(0.3),
+                                    AppColors.accentWithOpacity(0.1),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: Colors.amber.shade200,
+                                  color: AppColors.accent,
                                   width: 0.5,
                                 ),
                               ),
@@ -104,7 +108,7 @@ class BookmarkCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.amber.shade700,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             );
@@ -121,10 +125,10 @@ class BookmarkCard extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.green.shade50,
+                              color: AppColors.success.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: Colors.green.shade200,
+                                color: AppColors.success,
                                 width: 0.5,
                               ),
                             ),
@@ -134,7 +138,7 @@ class BookmarkCard extends StatelessWidget {
                                 Icon(
                                   Icons.download_rounded,
                                   size: 14,
-                                  color: Colors.green.shade600,
+                                  color: AppColors.success,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
@@ -142,7 +146,7 @@ class BookmarkCard extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.green.shade700,
+                                    color: AppColors.success,
                                   ),
                                 ),
                               ],
@@ -158,13 +162,13 @@ class BookmarkCard extends StatelessWidget {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Colors.purple.shade100,
-                                    Colors.purple.shade50,
+                                    AppColors.secondaryWithOpacity(0.3),
+                                    AppColors.secondaryWithOpacity(0.1),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Colors.purple.shade200,
+                                  color: AppColors.secondary,
                                   width: 0.5,
                                 ),
                               ),
@@ -173,7 +177,7 @@ class BookmarkCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple.shade700,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -187,13 +191,13 @@ class BookmarkCard extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.red.shade50,
+                    color: AppColors.error.withValues(alpha: 0.1),
                   ),
                   child: IconButton(
                     onPressed: () => _showRemoveDialog(context),
                     icon: Icon(
                       Icons.bookmark_remove_rounded,
-                      color: Colors.red.shade600,
+                      color: AppColors.error,
                       size: 22,
                     ),
                     padding: const EdgeInsets.all(8),
@@ -249,11 +253,7 @@ class BookmarkCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Colors.amber.shade300,
-            Colors.orange.shade400,
-            Colors.deepOrange.shade300,
-          ],
+          colors: [AppColors.primary, AppColors.secondary, AppColors.accent],
         ),
       ),
       child: Stack(
@@ -262,7 +262,11 @@ class BookmarkCard extends StatelessWidget {
           Positioned.fill(child: CustomPaint(painter: _BookPatternPainter())),
           // Bookmark icon
           const Center(
-            child: Icon(Icons.bookmark_rounded, size: 36, color: Colors.white),
+            child: Icon(
+              Icons.bookmark_rounded,
+              size: 36,
+              color: AppColors.white,
+            ),
           ),
         ],
       ),
@@ -293,7 +297,7 @@ class BookmarkCard extends StatelessWidget {
               LocalizationService.instance.translate(
                 'widgets.bookmarkCard.cancel',
               ),
-              style: TextStyle(color: Colors.grey[600]),
+              style: TextStyle(color: AppColors.grey600),
             ),
           ),
           ElevatedButton(
@@ -302,8 +306,8 @@ class BookmarkCard extends StatelessWidget {
               onRemoveBookmark();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red.shade600,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.error,
+              foregroundColor: AppColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -333,7 +337,7 @@ class _BookPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.1)
+      ..color = AppColors.white.withValues(alpha: 0.1)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 

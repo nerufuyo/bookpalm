@@ -11,7 +11,9 @@
   "pages": {
     "home": {
       "title": "BookPalm",
-      "retry": "Wiederholen"
+      "retry": "Wiederholen",
+      "noBooksFound": "Keine Bücher gefunden",
+      "searchHint": "Bücher, Autoren suchen..."
     },
     "bookmarks": {
       "title": "Lesezeichen",
@@ -32,7 +34,31 @@
       "by": "von"
     },
     "filterBottomSheet": {
-      "clearAll": "Alle löschen"
+      "title": "Filter",
+      "clearAll": "Alle löschen",
+      "languages": "Sprachen",
+      "sortBy": "Sortieren nach",
+      "authorYearRange": "Geburtsjahr des Autors",
+      "fromYear": "Von Jahr",
+      "toYear": "Bis Jahr",
+      "applyFilters": "Filter anwenden",
+      "sortOptions": {
+        "popular": "Beliebteste",
+        "ascending": "ID Aufsteigend",
+        "descending": "ID Absteigend"
+      },
+      "languageNames": {
+        "en": "Englisch",
+        "fr": "Französisch",
+        "de": "Deutsch",
+        "es": "Spanisch",
+        "it": "Italienisch",
+        "pt": "Portugiesisch",
+        "ru": "Russisch",
+        "zh": "Chinesisch",
+        "ja": "Japanisch",
+        "ar": "Arabisch"
+      }
     }
   },
   "snackbars": {
@@ -117,5 +143,17 @@
     "ja": "Japanisch",
     "zh": "Chinesisch",
     "ko": "Koreanisch"
+  },
+  "categories": {
+    "popular": "Beliebt",
+    "fiction": "Fiktion",
+    "history": "Geschichte",
+    "science": "Wissenschaft",
+    "philosophy": "Philosophie",
+    "children": "Kinder"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "Ihre Digitale Bibliothek"
   }
 }

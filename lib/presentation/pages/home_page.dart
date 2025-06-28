@@ -83,7 +83,9 @@ class HomePage extends StatelessWidget {
                         Text(
                           controller.errorMessage.value.isNotEmpty
                               ? controller.errorMessage.value
-                              : 'No books found',
+                              : LocalizationService.instance.translate(
+                                  'pages.home.noBooksFound',
+                                ),
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey[600],

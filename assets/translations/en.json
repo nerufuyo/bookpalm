@@ -11,7 +11,9 @@
   "pages": {
     "home": {
       "title": "BookPalm",
-      "retry": "Retry"
+      "retry": "Retry",
+      "noBooksFound": "No books found",
+      "searchHint": "Search books, authors..."
     },
     "bookmarks": {
       "title": "Bookmarks",
@@ -32,7 +34,31 @@
       "by": "by"
     },
     "filterBottomSheet": {
-      "clearAll": "Clear All"
+      "title": "Filters",
+      "clearAll": "Clear All",
+      "languages": "Languages",
+      "sortBy": "Sort by",
+      "authorYearRange": "Author Birth Year Range",
+      "fromYear": "From Year",
+      "toYear": "To Year",
+      "applyFilters": "Apply Filters",
+      "sortOptions": {
+        "popular": "Most Popular",
+        "ascending": "ID Ascending", 
+        "descending": "ID Descending"
+      },
+      "languageNames": {
+        "en": "English",
+        "fr": "French",
+        "de": "German", 
+        "es": "Spanish",
+        "it": "Italian",
+        "pt": "Portuguese",
+        "ru": "Russian",
+        "zh": "Chinese",
+        "ja": "Japanese",
+        "ar": "Arabic"
+      }
     }
   },
   "snackbars": {
@@ -187,5 +213,13 @@
     "ja": "Japanese",
     "zh": "Chinese",
     "ko": "Korean"
+  },
+  "categories": {
+    "popular": "Popular",
+    "fiction": "Fiction",
+    "history": "History",
+    "science": "Science",
+    "philosophy": "Philosophy",
+    "children": "Children"
   }
 }

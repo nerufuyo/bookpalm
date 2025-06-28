@@ -11,7 +11,9 @@
   "pages": {
     "home": {
       "title": "BookPalm",
-      "retry": "Coba Lagi"
+      "retry": "Coba Lagi",
+      "noBooksFound": "Tidak ada buku ditemukan",
+      "searchHint": "Cari buku, penulis..."
     },
     "bookmarks": {
       "title": "Bookmark",
@@ -32,7 +34,31 @@
       "by": "oleh"
     },
     "filterBottomSheet": {
-      "clearAll": "Hapus Semua"
+      "title": "Filter",
+      "clearAll": "Hapus Semua",
+      "languages": "Bahasa",
+      "sortBy": "Urutkan berdasarkan",
+      "authorYearRange": "Rentang Tahun Lahir Penulis",
+      "fromYear": "Dari Tahun",
+      "toYear": "Ke Tahun",
+      "applyFilters": "Terapkan Filter",
+      "sortOptions": {
+        "popular": "Paling Populer",
+        "ascending": "ID Naik",
+        "descending": "ID Turun"
+      },
+      "languageNames": {
+        "en": "Bahasa Inggris",
+        "fr": "Bahasa Prancis",
+        "de": "Bahasa Jerman",
+        "es": "Bahasa Spanyol",
+        "it": "Bahasa Italia",
+        "pt": "Bahasa Portugis",
+        "ru": "Bahasa Rusia",
+        "zh": "Bahasa Mandarin",
+        "ja": "Bahasa Jepang",
+        "ar": "Bahasa Arab"
+      }
     }
   },
   "snackbars": {
@@ -117,5 +143,17 @@
     "ja": "Bahasa Jepang",
     "zh": "Bahasa Tionghoa",
     "ko": "Bahasa Korea"
+  },
+  "categories": {
+    "popular": "Populer",
+    "fiction": "Fiksi",
+    "history": "Sejarah",
+    "science": "Sains",
+    "philosophy": "Filsafat",
+    "children": "Anak-anak"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "Perpustakaan Digital Anda"
   }
 }
