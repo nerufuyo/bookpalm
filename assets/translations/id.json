@@ -1,0 +1,121 @@
+{
+  "app": {
+    "name": "BookPalm",
+    "tagline": "Perpustakaan Digital Anda"
+  },
+  "navigation": {
+    "home": "Beranda",
+    "bookmarks": "Bookmark",
+    "settings": "Pengaturan"
+  },
+  "pages": {
+    "home": {
+      "title": "BookPalm",
+      "retry": "Coba Lagi"
+    },
+    "bookmarks": {
+      "title": "Bookmark",
+      "tryAgain": "Coba Lagi"
+    }
+  },
+  "widgets": {
+    "emptyBookmarks": {
+      "title": "Belum Ada Bookmark",
+      "description": "Mulai jelajahi buku dan bookmark favorit Anda untuk menyimpannya dengan mudah.",
+      "browseBooks": "Jelajahi Buku"
+    },
+    "bookmarkCard": {
+      "removeTitle": "Hapus Bookmark",
+      "removeMessage": "Apakah Anda yakin ingin menghapus \"{title}\" dari bookmark Anda?",
+      "cancel": "Batal",
+      "remove": "Hapus",
+      "by": "oleh"
+    },
+    "filterBottomSheet": {
+      "clearAll": "Hapus Semua"
+    }
+  },
+  "snackbars": {
+    "cacheStatsLoadFailed": "Gagal memuat statistik cache: {error}",
+    "cacheClearSuccess": "Cache berhasil dihapus",
+    "cacheClearFailed": "Gagal menghapus cache: {error}",
+    "oldCacheClearSuccess": "Cache lama berhasil dihapus",
+    "oldCacheClearFailed": "Gagal menghapus cache lama: {error}",
+    "languageChangeSuccess": "Bahasa berhasil diubah",
+    "languageChangeFailed": "Gagal mengubah bahasa: {error}",
+    "connectionRestored": "Koneksi dipulihkan. Menyinkronkan data...",
+    "noConnection": "Tidak ada koneksi internet. Menggunakan data offline."
+  },
+  "dialogs": {
+    "clearCache": {
+      "title": "Hapus Cache",
+      "content": "Ini akan menghapus semua buku dan hasil pencarian yang di-cache. Anda akan memerlukan koneksi internet untuk menjelajahi buku lagi. Bookmark Anda tidak akan terpengaruh.\n\nApakah Anda yakin ingin melanjutkan?",
+      "cancel": "Batal",
+      "confirm": "Hapus Cache"
+    }
+  },
+  "bookDetail": {
+    "loading": "Memuat detail buku...",
+    "errorTitle": "Gagal memuat buku",
+    "errorMessage": "Kami tidak dapat memuat detail buku. Silakan periksa koneksi Anda dan coba lagi.",
+    "retryButton": "Coba Lagi",
+    "notFoundTitle": "Buku tidak ditemukan",
+    "notFoundMessage": "Buku yang diminta tidak dapat ditemukan.",
+    "aboutThisBook": "Tentang Buku Ini",
+    "authorDetails": "Detail Penulis",
+    "authors": "Penulis",
+    "author": "Penulis",
+    "publicationInformation": "Informasi Publikasi",
+    "bookId": "ID Buku",
+    "mediaType": "Jenis Media",
+    "downloads": "Unduhan",
+    "downloadsTimes": "kali",
+    "copyrightStatus": "Status Hak Cipta",
+    "copyrighted": "Berhak Cipta",
+    "publicDomain": "Domain Publik",
+    "languages": "Bahasa",
+    "keyThemesTopics": "Tema & Topik Utama",
+    "culturalHeritage": "Warisan Budaya",
+    "culturalHeritageDescription": "Sebagai karya domain publik, buku ini merupakan bagian dari warisan budaya bersama kita. Awalnya diterbitkan pada era sebelum pembatasan hak cipta modern, sekarang menjadi milik umat manusia dan dapat dibagikan, dipelajari, dan dinikmati oleh semua orang secara bebas.",
+    "availableFormats": "Format Tersedia",
+    "formatRecommendations": "Rekomendasi Format",
+    "formatRecommendationText": "Untuk pengalaman membaca terbaik: EPUB untuk e-reader, HTML untuk browser web, atau PDF untuk pencetakan. Semua format gratis untuk diunduh dan digunakan.",
+    "readingStatistics": "Statistik Pembacaan",
+    "totalDownloads": "Total Unduhan",
+    "popularityRank": "Peringkat Popularitas",
+    "readingInformation": "Informasi Membaca",
+    "bookmarkAdd": "Tandai",
+    "bookmarkRemove": "Hapus",
+    "bookmarkAdded": "Buku berhasil ditandai",
+    "bookmarkRemoved": "Buku dihapus dari tandai"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "language": "Bahasa",
+    "languageDescription": "Pilih bahasa untuk aplikasi",
+    "connectionStatus": "Status Koneksi",
+    "connected": "Terhubung ke Internet",
+    "offline": "Offline",
+    "offlineMessage": "Anda masih bisa menjelajahi buku dan bookmark yang telah di-cache saat offline.",
+    "cacheManagement": "Manajemen Cache",
+    "cachedBooks": "Buku Ter-cache",
+    "cachedSearches": "Pencarian Ter-cache",
+    "refreshCacheStats": "Perbarui Statistik Cache",
+    "clearAllCache": "Hapus Semua Cache",
+    "offlineFeatures": "Fitur Offline",
+    "offlineFeaturesDescription": "BookPalm secara otomatis menyimpan cache buku dan hasil pencarian untuk tampilan offline. Saat Anda offline, Anda masih dapat:",
+    "browseCachedBooks": "Jelajahi buku yang telah dilihat sebelumnya",
+    "accessBookmarks": "Akses bookmark Anda",
+    "viewCachedSearches": "Lihat hasil pencarian ter-cache",
+    "readBookDetails": "Baca detail buku",
+    "newContentNote": "Catatan: Konten baru memerlukan koneksi internet."
+  },
+  "languages": {
+    "en": "Bahasa Inggris",
+    "id": "Bahasa Indonesia",
+    "de": "Bahasa Jerman",
+    "ja": "Bahasa Jepang",
+    "zh": "Bahasa Tionghoa",
+    "ko": "Bahasa Korea"
+  }
+}

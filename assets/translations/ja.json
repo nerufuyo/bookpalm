@@ -1,0 +1,121 @@
+{
+  "app": {
+    "name": "BookPalm",
+    "tagline": "あなたのデジタル図書館"
+  },
+  "navigation": {
+    "home": "ホーム",
+    "bookmarks": "ブックマーク",
+    "settings": "設定"
+  },
+  "pages": {
+    "home": {
+      "title": "BookPalm",
+      "retry": "再試行"
+    },
+    "bookmarks": {
+      "title": "ブックマーク",
+      "tryAgain": "再試行"
+    }
+  },
+  "widgets": {
+    "emptyBookmarks": {
+      "title": "まだブックマークがありません",
+      "description": "本を探索して、お気に入りをブックマークして手軽に保存しましょう。",
+      "browseBooks": "本を閲覧"
+    },
+    "bookmarkCard": {
+      "removeTitle": "ブックマーク削除",
+      "removeMessage": "「{title}」をブックマークから削除してもよろしいですか？",
+      "cancel": "キャンセル",
+      "remove": "削除",
+      "by": "著者："
+    },
+    "filterBottomSheet": {
+      "clearAll": "すべてクリア"
+    }
+  },
+  "snackbars": {
+    "cacheStatsLoadFailed": "キャッシュ統計の読み込みに失敗しました：{error}",
+    "cacheClearSuccess": "キャッシュが正常にクリアされました",
+    "cacheClearFailed": "キャッシュのクリアに失敗しました：{error}",
+    "oldCacheClearSuccess": "古いキャッシュが正常にクリアされました",
+    "oldCacheClearFailed": "古いキャッシュのクリアに失敗しました：{error}",
+    "languageChangeSuccess": "言語が正常に変更されました",
+    "languageChangeFailed": "言語の変更に失敗しました：{error}",
+    "connectionRestored": "接続が復旧しました。データを同期しています...",
+    "noConnection": "インターネット接続がありません。オフラインデータを使用しています。"
+  },
+  "dialogs": {
+    "clearCache": {
+      "title": "キャッシュをクリア",
+      "content": "これにより、キャッシュされたすべての本と検索結果が削除されます。再び本を閲覧するにはインターネット接続が必要です。ブックマークは影響を受けません。\n\n続行してもよろしいですか？",
+      "cancel": "キャンセル",
+      "confirm": "キャッシュをクリア"
+    }
+  },
+  "bookDetail": {
+    "loading": "書籍詳細を読み込み中...",
+    "errorTitle": "書籍の読み込みに失敗しました",
+    "errorMessage": "書籍詳細を読み込めませんでした。接続を確認してもう一度お試しください。",
+    "retryButton": "再試行",
+    "notFoundTitle": "書籍が見つかりません",
+    "notFoundMessage": "要求された書籍が見つかりませんでした。",
+    "aboutThisBook": "この本について",
+    "authorDetails": "著者詳細",
+    "authors": "著者",
+    "author": "著者",
+    "publicationInformation": "出版情報",
+    "bookId": "書籍ID",
+    "mediaType": "メディアタイプ",
+    "downloads": "ダウンロード数",
+    "downloadsTimes": "回",
+    "copyrightStatus": "著作権状況",
+    "copyrighted": "著作権あり",
+    "publicDomain": "パブリックドメイン",
+    "languages": "言語",
+    "keyThemesTopics": "主要テーマとトピック",
+    "culturalHeritage": "文化遺産",
+    "culturalHeritageDescription": "パブリックドメインの作品として、この本は私たちの共有文化遺産の一部を表しています。現代の著作権制限以前の時代に最初に出版され、今では人類のものとなり、すべての人が自由に共有、研究、楽しむことができます。",
+    "availableFormats": "利用可能な形式",
+    "formatRecommendations": "形式の推奨事項",
+    "formatRecommendationText": "最高の読書体験のために：電子書籍リーダーにはEPUB、ウェブブラウザにはHTML、印刷にはPDF。すべての形式は無料でダウンロードして使用できます。",
+    "readingStatistics": "読書統計",
+    "totalDownloads": "総ダウンロード数",
+    "popularityRank": "人気ランク",
+    "readingInformation": "読書情報",
+    "bookmarkAdd": "ブックマーク",
+    "bookmarkRemove": "削除",
+    "bookmarkAdded": "書籍が正常にブックマークされました",
+    "bookmarkRemoved": "書籍がブックマークから削除されました"
+  },
+  "settings": {
+    "title": "設定",
+    "language": "言語",
+    "languageDescription": "アプリケーションの言語を選択",
+    "connectionStatus": "接続状況",
+    "connected": "インターネットに接続済み",
+    "offline": "オフライン",
+    "offlineMessage": "オフライン時でもキャッシュされた書籍とブックマークを閲覧できます。",
+    "cacheManagement": "キャッシュ管理",
+    "cachedBooks": "キャッシュされた書籍",
+    "cachedSearches": "キャッシュされた検索",
+    "refreshCacheStats": "キャッシュ統計を更新",
+    "clearAllCache": "すべてのキャッシュをクリア",
+    "offlineFeatures": "オフライン機能",
+    "offlineFeaturesDescription": "BookPalmは自動的に書籍と検索結果をキャッシュしてオフライン表示に対応します。オフライン時でも以下が可能です：",
+    "browseCachedBooks": "以前に表示した書籍の閲覧",
+    "accessBookmarks": "ブックマークへのアクセス",
+    "viewCachedSearches": "キャッシュされた検索結果の表示",
+    "readBookDetails": "書籍詳細の読み取り",
+    "newContentNote": "注意：新しいコンテンツにはインターネット接続が必要です。"
+  },
+  "languages": {
+    "en": "英語",
+    "id": "インドネシア語",
+    "de": "ドイツ語",
+    "ja": "日本語",
+    "zh": "中国語",
+    "ko": "韓国語"
+  }
+}

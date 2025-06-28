@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/services/connection_service.dart';
+import '../../../core/localization/localization_service.dart';
 import '../../../core/injection/injection_container.dart' as di;
 import '../../../data/datasources/book_local_data_source.dart';
 
 class SettingsController extends GetxController {
   final ConnectionService _connectionService = Get.find<ConnectionService>();
+  final LocalizationService _localizationService = LocalizationService.instance;
   final BookLocalDataSource _localDataSource = di.sl<BookLocalDataSource>();
 
   final RxBool _isLoadingCacheStats = false.obs;
@@ -14,6 +16,9 @@ class SettingsController extends GetxController {
   bool get isConnected => _connectionService.isConnected;
   bool get isLoadingCacheStats => _isLoadingCacheStats.value;
   Map<String, int> get cacheStats => _cacheStats;
+  String get currentLanguage => _localizationService.currentLanguage;
+  Map<String, String> get supportedLanguages =>
+      _localizationService.supportedLanguages;
 
   @override
   void onInit() {
@@ -29,7 +34,10 @@ class SettingsController extends GetxController {
     } catch (e) {
       Get.showSnackbar(
         GetSnackBar(
-          message: 'Failed to load cache stats: $e',
+          message: LocalizationService.instance.translate(
+            'snackbars.cacheStatsLoadFailed',
+            {'error': e.toString()},
+          ),
           backgroundColor: Get.theme.colorScheme.error,
           duration: const Duration(seconds: 3),
         ),
@@ -44,21 +52,30 @@ class SettingsController extends GetxController {
       // Show confirmation dialog
       final confirmed = await Get.dialog<bool>(
         AlertDialog(
-          title: const Text('Clear Cache'),
-          content: const Text(
-            'This will remove all cached books and search results. '
-            'You will need an internet connection to browse books again. '
-            'Your bookmarks will not be affected.\n\n'
-            'Are you sure you want to continue?',
+          title: Text(
+            LocalizationService.instance.translate('dialogs.clearCache.title'),
+          ),
+          content: Text(
+            LocalizationService.instance.translate(
+              'dialogs.clearCache.content',
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Get.back(result: false),
-              child: const Text('Cancel'),
+              child: Text(
+                LocalizationService.instance.translate(
+                  'dialogs.clearCache.cancel',
+                ),
+              ),
             ),
             TextButton(
               onPressed: () => Get.back(result: true),
-              child: const Text('Clear Cache'),
+              child: Text(
+                LocalizationService.instance.translate(
+                  'dialogs.clearCache.confirm',
+                ),
+              ),
             ),
           ],
         ),
@@ -71,7 +88,9 @@ class SettingsController extends GetxController {
 
         Get.showSnackbar(
           GetSnackBar(
-            message: 'Cache cleared successfully',
+            message: LocalizationService.instance.translate(
+              'snackbars.cacheClearSuccess',
+            ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 2),
           ),
@@ -80,7 +99,10 @@ class SettingsController extends GetxController {
     } catch (e) {
       Get.showSnackbar(
         GetSnackBar(
-          message: 'Failed to clear cache: $e',
+          message: LocalizationService.instance.translate(
+            'snackbars.cacheClearFailed',
+            {'error': e.toString()},
+          ),
           backgroundColor: Get.theme.colorScheme.error,
           duration: const Duration(seconds: 3),
         ),
@@ -97,7 +119,9 @@ class SettingsController extends GetxController {
 
       Get.showSnackbar(
         GetSnackBar(
-          message: 'Old cache cleared successfully',
+          message: LocalizationService.instance.translate(
+            'snackbars.oldCacheClearSuccess',
+          ),
           backgroundColor: Colors.green,
           duration: const Duration(seconds: 2),
         ),
@@ -105,7 +129,38 @@ class SettingsController extends GetxController {
     } catch (e) {
       Get.showSnackbar(
         GetSnackBar(
-          message: 'Failed to clear old cache: $e',
+          message: LocalizationService.instance.translate(
+            'snackbars.oldCacheClearFailed',
+            {'error': e.toString()},
+          ),
+          backgroundColor: Get.theme.colorScheme.error,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  Future<void> changeLanguage(String languageCode) async {
+    try {
+      await _localizationService.changeLanguage(languageCode);
+      Get.showSnackbar(
+        GetSnackBar(
+          message: LocalizationService.instance.translate(
+            'snackbars.languageChangeSuccess',
+          ),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      // Force rebuild of the settings page
+      update();
+    } catch (e) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: LocalizationService.instance.translate(
+            'snackbars.languageChangeFailed',
+            {'error': e.toString()},
+          ),
           backgroundColor: Get.theme.colorScheme.error,
           duration: const Duration(seconds: 3),
         ),

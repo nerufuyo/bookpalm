@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/settings_controller.dart';
+import '../../core/localization/localization_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -10,12 +11,17 @@ class SettingsPage extends StatelessWidget {
     final controller = Get.put(SettingsController());
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings'), elevation: 0),
+      appBar: AppBar(
+        title: Text(LocalizationService.instance.translate('settings.title')),
+        elevation: 0,
+      ),
       body: Obx(
         () => ListView(
           padding: const EdgeInsets.all(16),
           children: [
             _buildConnectionStatus(controller),
+            const SizedBox(height: 24),
+            _buildLanguageSection(controller),
             const SizedBox(height: 24),
             _buildCacheSection(controller),
             const SizedBox(height: 24),
@@ -34,7 +40,9 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Connection Status',
+              LocalizationService.instance.translate(
+                'settings.connectionStatus',
+              ),
               style: Get.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -48,7 +56,13 @@ class SettingsPage extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  controller.isConnected ? 'Connected to Internet' : 'Offline',
+                  controller.isConnected
+                      ? LocalizationService.instance.translate(
+                          'settings.connected',
+                        )
+                      : LocalizationService.instance.translate(
+                          'settings.offline',
+                        ),
                   style: TextStyle(
                     color: controller.isConnected ? Colors.green : Colors.red,
                     fontWeight: FontWeight.w500,
@@ -60,7 +74,9 @@ class SettingsPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'You can still browse cached books and bookmarks while offline.',
+                  LocalizationService.instance.translate(
+                    'settings.offlineMessage',
+                  ),
                   style: Get.textTheme.bodySmall?.copyWith(
                     color: Colors.grey[600],
                   ),
@@ -80,7 +96,9 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Cache Management',
+              LocalizationService.instance.translate(
+                'settings.cacheManagement',
+              ),
               style: Get.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -90,13 +108,15 @@ class SettingsPage extends StatelessWidget {
               const Center(child: CircularProgressIndicator())
             else ...[
               _buildCacheStatRow(
-                'Cached Books',
+                LocalizationService.instance.translate('settings.cachedBooks'),
                 '${controller.cacheStats['cached_books'] ?? 0}',
                 Icons.book,
               ),
               const SizedBox(height: 8),
               _buildCacheStatRow(
-                'Cached Searches',
+                LocalizationService.instance.translate(
+                  'settings.cachedSearches',
+                ),
                 '${controller.cacheStats['cached_lists'] ?? 0}',
                 Icons.search,
               ),
@@ -109,7 +129,11 @@ class SettingsPage extends StatelessWidget {
                     ? null
                     : controller.refreshCacheStats,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Refresh Cache Stats'),
+                label: Text(
+                  LocalizationService.instance.translate(
+                    'settings.refreshCacheStats',
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -120,7 +144,11 @@ class SettingsPage extends StatelessWidget {
                     ? null
                     : controller.clearCache,
                 icon: const Icon(Icons.clear_all),
-                label: const Text('Clear All Cache'),
+                label: Text(
+                  LocalizationService.instance.translate(
+                    'settings.clearAllCache',
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
@@ -152,24 +180,44 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Offline Features',
+              LocalizationService.instance.translate(
+                'settings.offlineFeatures',
+              ),
               style: Get.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              'BookPalm automatically caches books and search results for offline viewing. When you\'re offline, you can still:',
+              LocalizationService.instance.translate(
+                'settings.offlineFeaturesDescription',
+              ),
               style: Get.textTheme.bodyMedium,
             ),
             const SizedBox(height: 8),
-            _buildFeatureItem('Browse previously viewed books'),
-            _buildFeatureItem('Access your bookmarks'),
-            _buildFeatureItem('View cached search results'),
-            _buildFeatureItem('Read book details'),
+            _buildFeatureItem(
+              LocalizationService.instance.translate(
+                'settings.browseCachedBooks',
+              ),
+            ),
+            _buildFeatureItem(
+              LocalizationService.instance.translate(
+                'settings.accessBookmarks',
+              ),
+            ),
+            _buildFeatureItem(
+              LocalizationService.instance.translate(
+                'settings.viewCachedSearches',
+              ),
+            ),
+            _buildFeatureItem(
+              LocalizationService.instance.translate(
+                'settings.readBookDetails',
+              ),
+            ),
             const SizedBox(height: 8),
             Text(
-              'Note: New content requires an internet connection.',
+              LocalizationService.instance.translate('settings.newContentNote'),
               style: Get.textTheme.bodySmall?.copyWith(
                 fontStyle: FontStyle.italic,
                 color: Colors.grey[600],
@@ -191,6 +239,90 @@ class SettingsPage extends StatelessWidget {
           Expanded(child: Text(text)),
         ],
       ),
+    );
+  }
+
+  Widget _buildLanguageSection(SettingsController controller) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              LocalizationService.instance.translate('settings.language'),
+              style: Get.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              LocalizationService.instance.translate(
+                'settings.languageDescription',
+              ),
+              style: Get.textTheme.bodyMedium?.copyWith(
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: controller.currentLanguage,
+                  isExpanded: true,
+                  items: controller.supportedLanguages.entries
+                      .map(
+                        (entry) => DropdownMenuItem<String>(
+                          value: entry.key,
+                          child: Row(
+                            children: [
+                              _getLanguageFlag(entry.key),
+                              const SizedBox(width: 12),
+                              Text(
+                                LocalizationService.instance.translate(
+                                  'languages.${entry.key}',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue != null &&
+                        newValue != controller.currentLanguage) {
+                      controller.changeLanguage(newValue);
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getLanguageFlag(String languageCode) {
+    // Simple emoji flags for each language
+    final flags = {
+      'en': '🇺🇸',
+      'id': '🇮🇩',
+      'de': '🇩🇪',
+      'ja': '🇯🇵',
+      'zh': '🇨🇳',
+      'ko': '🇰🇷',
+    };
+
+    return Text(
+      flags[languageCode] ?? '🌐',
+      style: const TextStyle(fontSize: 20),
     );
   }
 }

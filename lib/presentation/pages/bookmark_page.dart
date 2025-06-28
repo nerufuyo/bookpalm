@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/localization/localization_service.dart';
 import '../controllers/bookmark_controller.dart';
 import '../widgets/bookmark_card.dart';
 import '../widgets/empty_bookmarks_widget.dart';
@@ -39,9 +40,15 @@ class _BookmarkPageState extends State<BookmarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Bookmarks',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+        title: GetBuilder<LocalizationService>(
+          init: LocalizationService.instance,
+          builder: (localization) => Text(
+            LocalizationService.instance.translate('pages.bookmarks.title'),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -114,7 +121,11 @@ class _BookmarkPageState extends State<BookmarkPage> {
           ElevatedButton.icon(
             onPressed: () => _controller.refreshBookmarks(),
             icon: const Icon(Icons.refresh_rounded),
-            label: const Text('Try Again'),
+            label: Text(
+              LocalizationService.instance.translate(
+                'pages.bookmarks.tryAgain',
+              ),
+            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.amber.shade600,
               foregroundColor: Colors.white,

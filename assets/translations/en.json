@@ -1,4 +1,59 @@
 {
+  "app": {
+    "name": "BookPalm",
+    "tagline": "Your Digital Library"
+  },
+  "navigation": {
+    "home": "Home",
+    "bookmarks": "Bookmarks",
+    "settings": "Settings"
+  },
+  "pages": {
+    "home": {
+      "title": "BookPalm",
+      "retry": "Retry"
+    },
+    "bookmarks": {
+      "title": "Bookmarks",
+      "tryAgain": "Try Again"
+    }
+  },
+  "widgets": {
+    "emptyBookmarks": {
+      "title": "No Bookmarks Yet",
+      "description": "Start exploring books and bookmark your favorites to keep them handy.",
+      "browseBooks": "Browse Books"
+    },
+    "bookmarkCard": {
+      "removeTitle": "Remove Bookmark",
+      "removeMessage": "Are you sure you want to remove \"{title}\" from your bookmarks?",
+      "cancel": "Cancel",
+      "remove": "Remove",
+      "by": "by"
+    },
+    "filterBottomSheet": {
+      "clearAll": "Clear All"
+    }
+  },
+  "snackbars": {
+    "cacheStatsLoadFailed": "Failed to load cache stats: {error}",
+    "cacheClearSuccess": "Cache cleared successfully",
+    "cacheClearFailed": "Failed to clear cache: {error}",
+    "oldCacheClearSuccess": "Old cache cleared successfully",
+    "oldCacheClearFailed": "Failed to clear old cache: {error}",
+    "languageChangeSuccess": "Language changed successfully",
+    "languageChangeFailed": "Failed to change language: {error}",
+    "connectionRestored": "Connection restored. Syncing data...",
+    "noConnection": "No internet connection. Using offline data."
+  },
+  "dialogs": {
+    "clearCache": {
+      "title": "Clear Cache",
+      "content": "This will remove all cached books and search results. You will need an internet connection to browse books again. Your bookmarks will not be affected.\n\nAre you sure you want to continue?",
+      "cancel": "Cancel",
+      "confirm": "Clear Cache"
+    }
+  },
   "bookDetail": {
     "loading": "Loading book details...",
     "errorTitle": "Failed to load book",
@@ -103,5 +158,34 @@
   "splash": {
     "appName": "BookPalm",
     "tagline": "Your Digital Library"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageDescription": "Select the language for the application",
+    "connectionStatus": "Connection Status",
+    "connected": "Connected to Internet",
+    "offline": "Offline",
+    "offlineMessage": "You can still browse cached books and bookmarks while offline.",
+    "cacheManagement": "Cache Management",
+    "cachedBooks": "Cached Books",
+    "cachedSearches": "Cached Searches",
+    "refreshCacheStats": "Refresh Cache Stats",
+    "clearAllCache": "Clear All Cache",
+    "offlineFeatures": "Offline Features",
+    "offlineFeaturesDescription": "BookPalm automatically caches books and search results for offline viewing. When you're offline, you can still:",
+    "browseCachedBooks": "Browse previously viewed books",
+    "accessBookmarks": "Access your bookmarks",
+    "viewCachedSearches": "View cached search results",
+    "readBookDetails": "Read book details",
+    "newContentNote": "Note: New content requires an internet connection."
+  },
+  "languages": {
+    "en": "English",
+    "id": "Indonesian",
+    "de": "German",
+    "ja": "Japanese",
+    "zh": "Chinese",
+    "ko": "Korean"
   }
 }

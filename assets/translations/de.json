@@ -1,0 +1,121 @@
+{
+  "app": {
+    "name": "BookPalm",
+    "tagline": "Ihre Digitale Bibliothek"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "bookmarks": "Lesezeichen",
+    "settings": "Einstellungen"
+  },
+  "pages": {
+    "home": {
+      "title": "BookPalm",
+      "retry": "Wiederholen"
+    },
+    "bookmarks": {
+      "title": "Lesezeichen",
+      "tryAgain": "Erneut versuchen"
+    }
+  },
+  "widgets": {
+    "emptyBookmarks": {
+      "title": "Noch keine Lesezeichen",
+      "description": "Entdecken Sie Bücher und setzen Sie Lesezeichen für Ihre Favoriten, um sie griffbereit zu haben.",
+      "browseBooks": "Bücher durchstöbern"
+    },
+    "bookmarkCard": {
+      "removeTitle": "Lesezeichen entfernen",
+      "removeMessage": "Sind Sie sicher, dass Sie \"{title}\" aus Ihren Lesezeichen entfernen möchten?",
+      "cancel": "Abbrechen",
+      "remove": "Entfernen",
+      "by": "von"
+    },
+    "filterBottomSheet": {
+      "clearAll": "Alle löschen"
+    }
+  },
+  "snackbars": {
+    "cacheStatsLoadFailed": "Fehler beim Laden der Cache-Statistiken: {error}",
+    "cacheClearSuccess": "Cache erfolgreich geleert",
+    "cacheClearFailed": "Fehler beim Leeren des Caches: {error}",
+    "oldCacheClearSuccess": "Alter Cache erfolgreich geleert",
+    "oldCacheClearFailed": "Fehler beim Leeren des alten Caches: {error}",
+    "languageChangeSuccess": "Sprache erfolgreich geändert",
+    "languageChangeFailed": "Fehler beim Ändern der Sprache: {error}",
+    "connectionRestored": "Verbindung wiederhergestellt. Daten werden synchronisiert...",
+    "noConnection": "Keine Internetverbindung. Offline-Daten werden verwendet."
+  },
+  "dialogs": {
+    "clearCache": {
+      "title": "Cache leeren",
+      "content": "Dies entfernt alle zwischengespeicherten Bücher und Suchergebnisse. Sie benötigen eine Internetverbindung, um wieder Bücher zu durchsuchen. Ihre Lesezeichen sind nicht betroffen.\n\nSind Sie sicher, dass Sie fortfahren möchten?",
+      "cancel": "Abbrechen",
+      "confirm": "Cache leeren"
+    }
+  },
+  "bookDetail": {
+    "loading": "Buchdetails werden geladen...",
+    "errorTitle": "Fehler beim Laden des Buches",
+    "errorMessage": "Die Buchdetails konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+    "retryButton": "Erneut versuchen",
+    "notFoundTitle": "Buch nicht gefunden",
+    "notFoundMessage": "Das angeforderte Buch konnte nicht gefunden werden.",
+    "aboutThisBook": "Über dieses Buch",
+    "authorDetails": "Autorendetails",
+    "authors": "Autoren",
+    "author": "Autor",
+    "publicationInformation": "Veröffentlichungsinformationen",
+    "bookId": "Buch-ID",
+    "mediaType": "Medientyp",
+    "downloads": "Downloads",
+    "downloadsTimes": "mal",
+    "copyrightStatus": "Urheberrechtsstatus",
+    "copyrighted": "Urheberrechtlich geschützt",
+    "publicDomain": "Gemeinfrei",
+    "languages": "Sprachen",
+    "keyThemesTopics": "Hauptthemen & Themen",
+    "culturalHeritage": "Kulturelles Erbe",
+    "culturalHeritageDescription": "Als gemeinfrei verfügbares Werk stellt dieses Buch einen Teil unseres gemeinsamen kulturellen Erbes dar. Ursprünglich in einer Zeit vor modernen Urheberrechtsbeschränkungen veröffentlicht, gehört es nun der Menschheit und kann von allen frei geteilt, studiert und genossen werden.",
+    "availableFormats": "Verfügbare Formate",
+    "formatRecommendations": "Format-Empfehlungen",
+    "formatRecommendationText": "Für das beste Leseerlebnis: EPUB für E-Reader, HTML für Webbrowser oder PDF zum Drucken. Alle Formate sind kostenlos zum Download und zur Nutzung verfügbar.",
+    "readingStatistics": "Lesestatistiken",
+    "totalDownloads": "Gesamte Downloads",
+    "popularityRank": "Beliebtheitsrang",
+    "readingInformation": "Leseinformationen",
+    "bookmarkAdd": "Lesezeichen",
+    "bookmarkRemove": "Entfernen",
+    "bookmarkAdded": "Buch erfolgreich als Lesezeichen gespeichert",
+    "bookmarkRemoved": "Buch aus Lesezeichen entfernt"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "languageDescription": "Wählen Sie die Sprache für die Anwendung",
+    "connectionStatus": "Verbindungsstatus",
+    "connected": "Mit dem Internet verbunden",
+    "offline": "Offline",
+    "offlineMessage": "Sie können weiterhin zwischengespeicherte Bücher und Lesezeichen durchsuchen, wenn Sie offline sind.",
+    "cacheManagement": "Cache-Verwaltung",
+    "cachedBooks": "Zwischengespeicherte Bücher",
+    "cachedSearches": "Zwischengespeicherte Suchen",
+    "refreshCacheStats": "Cache-Statistiken aktualisieren",
+    "clearAllCache": "Gesamten Cache leeren",
+    "offlineFeatures": "Offline-Funktionen",
+    "offlineFeaturesDescription": "BookPalm speichert automatisch Bücher und Suchergebnisse für die Offline-Anzeige zwischen. Wenn Sie offline sind, können Sie immer noch:",
+    "browseCachedBooks": "Zuvor angesehene Bücher durchsuchen",
+    "accessBookmarks": "Auf Ihre Lesezeichen zugreifen",
+    "viewCachedSearches": "Zwischengespeicherte Suchergebnisse anzeigen",
+    "readBookDetails": "Buchdetails lesen",
+    "newContentNote": "Hinweis: Neue Inhalte erfordern eine Internetverbindung."
+  },
+  "languages": {
+    "en": "Englisch",
+    "id": "Indonesisch",
+    "de": "Deutsch",
+    "ja": "Japanisch",
+    "zh": "Chinesisch",
+    "ko": "Koreanisch"
+  }
+}
