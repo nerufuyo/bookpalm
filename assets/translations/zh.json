@@ -11,7 +11,9 @@
   "pages": {
     "home": {
       "title": "BookPalm",
-      "retry": "重试"
+      "retry": "重试",
+      "noBooksFound": "未找到书籍",
+      "searchHint": "搜索书籍、作者..."
     },
     "bookmarks": {
       "title": "书签",
@@ -32,7 +34,31 @@
       "by": "作者："
     },
     "filterBottomSheet": {
-      "clearAll": "清除全部"
+      "title": "筛选器",
+      "clearAll": "清除全部",
+      "languages": "语言",
+      "sortBy": "排序方式",
+      "authorYearRange": "作者出生年份范围",
+      "fromYear": "起始年份",
+      "toYear": "结束年份",
+      "applyFilters": "应用筛选器",
+      "sortOptions": {
+        "popular": "最受欢迎",
+        "ascending": "ID升序",
+        "descending": "ID降序"
+      },
+      "languageNames": {
+        "en": "英语",
+        "fr": "法语",
+        "de": "德语",
+        "es": "西班牙语",
+        "it": "意大利语",
+        "pt": "葡萄牙语",
+        "ru": "俄语",
+        "zh": "中文",
+        "ja": "日语",
+        "ar": "阿拉伯语"
+      }
     }
   },
   "snackbars": {
@@ -117,5 +143,17 @@
     "ja": "日语",
     "zh": "中文",
     "ko": "韩语"
+  },
+  "categories": {
+    "popular": "热门",
+    "fiction": "小说",
+    "history": "历史",
+    "science": "科学",
+    "philosophy": "哲学",
+    "children": "儿童"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "您的数字图书馆"
   }
 }

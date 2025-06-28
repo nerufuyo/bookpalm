@@ -11,7 +11,9 @@
   "pages": {
     "home": {
       "title": "BookPalm",
-      "retry": "재시도"
+      "retry": "재시도",
+      "noBooksFound": "책을 찾을 수 없습니다",
+      "searchHint": "책, 저자 검색..."
     },
     "bookmarks": {
       "title": "북마크",
@@ -32,7 +34,31 @@
       "by": "저자:"
     },
     "filterBottomSheet": {
-      "clearAll": "모두 지우기"
+      "title": "필터",
+      "clearAll": "모두 지우기",
+      "languages": "언어",
+      "sortBy": "정렬 기준",
+      "authorYearRange": "작가 출생 연도 범위",
+      "fromYear": "시작 연도",
+      "toYear": "끝 연도",
+      "applyFilters": "필터 적용",
+      "sortOptions": {
+        "popular": "인기순",
+        "ascending": "ID 오름차순",
+        "descending": "ID 내림차순"
+      },
+      "languageNames": {
+        "en": "영어",
+        "fr": "프랑스어",
+        "de": "독일어",
+        "es": "스페인어",
+        "it": "이탈리아어",
+        "pt": "포르투갈어",
+        "ru": "러시아어",
+        "zh": "중국어",
+        "ja": "일본어",
+        "ar": "아랍어"
+      }
     }
   },
   "snackbars": {
@@ -117,5 +143,17 @@
     "ja": "일본어",
     "zh": "중국어",
     "ko": "한국어"
+  },
+  "categories": {
+    "popular": "인기",
+    "fiction": "소설",
+    "history": "역사",
+    "science": "과학",
+    "philosophy": "철학",
+    "children": "어린이"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "당신의 디지털 도서관"
   }
 }

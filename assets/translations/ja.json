@@ -11,7 +11,9 @@
   "pages": {
     "home": {
       "title": "BookPalm",
-      "retry": "再試行"
+      "retry": "再試行",
+      "noBooksFound": "本が見つかりません",
+      "searchHint": "本、著者を検索..."
     },
     "bookmarks": {
       "title": "ブックマーク",
@@ -32,7 +34,31 @@
       "by": "著者："
     },
     "filterBottomSheet": {
-      "clearAll": "すべてクリア"
+      "title": "フィルター",
+      "clearAll": "すべてクリア",
+      "languages": "言語",
+      "sortBy": "並び順",
+      "authorYearRange": "著者の生年範囲",
+      "fromYear": "開始年",
+      "toYear": "終了年",
+      "applyFilters": "フィルターを適用",
+      "sortOptions": {
+        "popular": "人気順",
+        "ascending": "ID昇順",
+        "descending": "ID降順"
+      },
+      "languageNames": {
+        "en": "英語",
+        "fr": "フランス語",
+        "de": "ドイツ語",
+        "es": "スペイン語",
+        "it": "イタリア語",
+        "pt": "ポルトガル語",
+        "ru": "ロシア語",
+        "zh": "中国語",
+        "ja": "日本語",
+        "ar": "アラビア語"
+      }
     }
   },
   "snackbars": {
@@ -117,5 +143,17 @@
     "ja": "日本語",
     "zh": "中国語",
     "ko": "韓国語"
+  },
+  "categories": {
+    "popular": "人気",
+    "fiction": "フィクション",
+    "history": "歴史",
+    "science": "科学",
+    "philosophy": "哲学",
+    "children": "児童書"
+  },
+  "splash": {
+    "appName": "BookPalm",
+    "tagline": "あなたのデジタル図書館"
   }
 }

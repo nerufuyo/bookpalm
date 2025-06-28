@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/localization/localization_service.dart';
 import '../../core/logging/app_logger.dart';
+import '../../core/theme/app_colors.dart';
 
 /// App splash screen with logo and loading animation
 class SplashPage extends StatefulWidget {
@@ -37,56 +39,59 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // App Logo
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
+    return GetBuilder<LocalizationService>(
+      init: LocalizationService.instance,
+      builder: (localization) => Scaffold(
+        backgroundColor: AppColors.primary,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // App Logo
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.menu_book,
+                  size: 60,
+                  color: AppColors.primary,
+                ),
               ),
-              child: const Icon(
-                Icons.menu_book,
-                size: 60,
-                color: Colors.deepPurple,
+              const SizedBox(height: 24),
+
+              // App Name
+              Text(
+                localization.translate('splash.appName'),
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
+              const SizedBox(height: 8),
 
-            // App Name
-            Text(
-              LocalizationService.instance.translate('splash.appName'),
-              style: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+              // Tagline
+              Text(
+                localization.translate('splash.tagline'),
+                style: const TextStyle(fontSize: 16, color: Colors.white70),
               ),
-            ),
-            const SizedBox(height: 8),
+              const SizedBox(height: 48),
 
-            // Tagline
-            Text(
-              LocalizationService.instance.translate('splash.tagline'),
-              style: const TextStyle(fontSize: 16, color: Colors.white70),
-            ),
-            const SizedBox(height: 48),
-
-            // Loading Indicator
-            const CircularProgressIndicator(color: Colors.white),
-          ],
+              // Loading Indicator
+              CircularProgressIndicator(color: AppColors.highlight),
+            ],
+          ),
         ),
       ),
     );

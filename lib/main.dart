@@ -4,6 +4,7 @@ import 'core/injection/injection_container.dart' as di;
 import 'core/localization/localization_service.dart';
 import 'core/logging/app_logger.dart';
 import 'core/services/connection_service.dart';
+import 'core/theme/app_theme.dart';
 import 'presentation/routes/app_router.dart';
 
 void main() async {
@@ -39,10 +40,7 @@ class BookPalmApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
       title: LocalizationService.instance.translate('app.name'),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       routerDelegate: AppRouter.router.routerDelegate,
       routeInformationParser: AppRouter.router.routeInformationParser,
       routeInformationProvider: AppRouter.router.routeInformationProvider,
