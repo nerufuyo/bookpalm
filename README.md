@@ -8,12 +8,42 @@ A modern Flutter application for browsing and managing books from the Project Gu
 - **Advanced Search**: Search books by title, author, or subject
 - **Smart Filtering**: Filter by categories, languages, and download count
 - **Bookmark Management**: Save favorite books for easy access
+- **Enhanced Book Detail UI**: Beautiful book cover displays with subtle background gradients and optimized floating action buttons
 - **Comprehensive Offline Support**: Full offline functionality with intelligent caching
 - **Real-time Sync**: Automatic data synchronization when connection is restored
 - **Cache Management**: Built-in tools to manage offline data storage
-- **Modern UI**: Material Design 3 with responsive layouts
+- **Modern UI**: Material Design 3 with responsive layouts and nature-inspired color palette
 - **Multi-platform**: Supports Android, iOS, Web, Windows, macOS, and Linux
 - **Internationalization**: Full multi-language support with instant language switching
+
+## 🎨 Design System
+
+BookPalm features a carefully crafted design system with a nature-inspired color palette that creates a calming and professional reading environment.
+
+### Color Palette
+
+- **Primary Green (`#2F5249`)**: Represents stability, growth, and knowledge
+- **Secondary Green (`#437057`)**: Provides harmony and balance in the interface  
+- **Accent Green (`#97B067`)**: Suggests wisdom and tranquility for focused reading
+- **Highlight Yellow (`#E3DE61`)**: Adds warmth and highlights important information
+- **Background (`#FBFBFB`)**: Creates a clean, paper-like reading experience
+
+### Typography
+
+BookPalm uses **Poppins**, a modern geometric sans-serif typeface that provides:
+- Excellent multilingual support for our international user base
+- High readability at all sizes
+- Modern, friendly appearance
+- Perfect support for English, Indonesian, German, Japanese, Chinese, and Korean
+
+### Recent UI Improvements
+
+#### Book Detail Page Enhancements
+- **Book Cover Background**: Added subtle gradient background with green tint at 0.15 opacity for enhanced visual appeal
+- **Optimized Floating Action Button**: Simplified from extended text button to clean icon-only design
+  - Uses intuitive bookmark icons (bookmark_add/bookmark_remove)
+  - Color-coded: Green for adding bookmarks, Red for removing
+  - Eliminates text overflow issues while maintaining clear functionality
 
 ## 🌍 Localization & Internationalization
 
