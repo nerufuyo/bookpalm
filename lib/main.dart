@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'core/injection/injection_container.dart' as di;
 import 'core/localization/localization_service.dart';
 import 'core/logging/app_logger.dart';
+import 'core/services/connection_service.dart';
 import 'presentation/routes/app_router.dart';
 
 void main() async {
@@ -19,6 +20,10 @@ void main() async {
   // Initialize dependency injection
   await di.init();
   AppLogger.instance.info('Dependency injection initialized', tag: 'Main');
+
+  // Initialize connection service
+  Get.put(di.sl<ConnectionService>());
+  AppLogger.instance.info('Connection service initialized', tag: 'Main');
 
   runApp(const BookPalmApp());
 }
