@@ -14,7 +14,7 @@ void main() async {
   AppLogger.instance.info('Application starting...', tag: 'Main');
 
   // Initialize localization
-  await LocalizationService.instance.loadLanguage('en');
+  await LocalizationService.instance.loadSavedLanguage();
   AppLogger.instance.info('Localization initialized', tag: 'Main');
 
   // Initialize dependency injection
@@ -25,6 +25,10 @@ void main() async {
   Get.put(di.sl<ConnectionService>());
   AppLogger.instance.info('Connection service initialized', tag: 'Main');
 
+  // Initialize localization service in GetX
+  Get.put(LocalizationService.instance);
+  AppLogger.instance.info('Localization service registered', tag: 'Main');
+
   runApp(const BookPalmApp());
 }
 
@@ -34,7 +38,7 @@ class BookPalmApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
-      title: 'BookPalm',
+      title: LocalizationService.instance.translate('app.name'),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

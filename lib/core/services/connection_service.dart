@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../localization/localization_service.dart';
 
 class ConnectionService extends GetxService {
   final Connectivity _connectivity = Connectivity();
@@ -52,7 +53,9 @@ class ConnectionService extends GetxService {
       if (isConnected) {
         Get.showSnackbar(
           GetSnackBar(
-            message: 'Connection restored. Syncing data...',
+            message: LocalizationService.instance.translate(
+              'snackbars.connectionRestored',
+            ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 2),
             icon: const Icon(Icons.wifi, color: Colors.white),
@@ -61,7 +64,9 @@ class ConnectionService extends GetxService {
       } else {
         Get.showSnackbar(
           GetSnackBar(
-            message: 'No internet connection. Using offline data.',
+            message: LocalizationService.instance.translate(
+              'snackbars.noConnection',
+            ),
             backgroundColor: Colors.orange,
             duration: const Duration(seconds: 3),
             icon: const Icon(Icons.wifi_off, color: Colors.white),

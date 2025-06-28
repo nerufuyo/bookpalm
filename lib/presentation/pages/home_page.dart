@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/localization/localization_service.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/book_card.dart';
 import '../widgets/book_card_shimmer.dart';
@@ -20,9 +21,12 @@ class HomePage extends StatelessWidget {
     return OfflineWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'BookPalm',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          title: GetBuilder<LocalizationService>(
+            init: LocalizationService.instance,
+            builder: (localization) => Text(
+              LocalizationService.instance.translate('pages.home.title'),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
           ),
           elevation: 0,
           actions: [
@@ -92,7 +96,14 @@ class HomePage extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () =>
                                 controller.loadBooks(isRefresh: true),
-                            child: const Text('Retry'),
+                            child: GetBuilder<LocalizationService>(
+                              init: LocalizationService.instance,
+                              builder: (localization) => Text(
+                                LocalizationService.instance.translate(
+                                  'pages.home.retry',
+                                ),
+                              ),
+                            ),
                           ),
                       ],
                     ),

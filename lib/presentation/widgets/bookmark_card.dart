@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../core/localization/localization_service.dart';
 import '../../domain/entities/book.dart';
 
 class BookmarkCard extends StatelessWidget {
@@ -20,9 +21,7 @@ class BookmarkCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       elevation: 4,
       shadowColor: Colors.black.withValues(alpha: 0.1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -32,10 +31,7 @@ class BookmarkCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.white,
-                Colors.amber.shade50,
-              ],
+              colors: [Colors.white, Colors.amber.shade50],
             ),
           ),
           child: Padding(
@@ -45,9 +41,9 @@ class BookmarkCard extends StatelessWidget {
               children: [
                 // Book Cover
                 _buildBookCover(),
-                
+
                 const SizedBox(width: 16),
-                
+
                 // Book Details
                 Expanded(
                   child: Column(
@@ -63,12 +59,12 @@ class BookmarkCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      
+
                       const SizedBox(height: 8),
-                      
+
                       if (book.authors.isNotEmpty)
                         Text(
-                          'by ${book.authors.map((author) => author.name).join(', ')}',
+                          '${LocalizationService.instance.translate('widgets.bookmarkCard.by')} ${book.authors.map((author) => author.name).join(', ')}',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -77,9 +73,9 @@ class BookmarkCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       if (book.subjects.isNotEmpty)
                         Wrap(
                           spacing: 6,
@@ -114,9 +110,9 @@ class BookmarkCard extends StatelessWidget {
                             );
                           }).toList(),
                         ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       Row(
                         children: [
                           Container(
@@ -186,7 +182,7 @@ class BookmarkCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 // Remove Bookmark Button
                 Container(
                   decoration: BoxDecoration(
@@ -218,7 +214,7 @@ class BookmarkCard extends StatelessWidget {
   Widget _buildBookCover() {
     // Try to get the book cover image URL from formats
     String? imageUrl = book.formats['image/jpeg'];
-    
+
     return Container(
       width: 85,
       height: 130,
@@ -263,18 +259,10 @@ class BookmarkCard extends StatelessWidget {
       child: Stack(
         children: [
           // Background pattern
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _BookPatternPainter(),
-            ),
-          ),
+          Positioned.fill(child: CustomPaint(painter: _BookPatternPainter())),
           // Bookmark icon
           const Center(
-            child: Icon(
-              Icons.bookmark_rounded,
-              size: 36,
-              color: Colors.white,
-            ),
+            child: Icon(Icons.bookmark_rounded, size: 36, color: Colors.white),
           ),
         ],
       ),
@@ -285,26 +273,27 @@ class BookmarkCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        title: const Text(
-          'Remove Bookmark',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          LocalizationService.instance.translate(
+            'widgets.bookmarkCard.removeTitle',
           ),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         content: Text(
-          'Are you sure you want to remove "${book.title}" from your bookmarks?',
+          LocalizationService.instance.translate(
+            'widgets.bookmarkCard.removeMessage',
+            {'title': book.title},
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
-              'Cancel',
-              style: TextStyle(
-                color: Colors.grey[600],
+              LocalizationService.instance.translate(
+                'widgets.bookmarkCard.cancel',
               ),
+              style: TextStyle(color: Colors.grey[600]),
             ),
           ),
           ElevatedButton(
@@ -319,7 +308,11 @@ class BookmarkCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text('Remove'),
+            child: Text(
+              LocalizationService.instance.translate(
+                'widgets.bookmarkCard.remove',
+              ),
+            ),
           ),
         ],
       ),

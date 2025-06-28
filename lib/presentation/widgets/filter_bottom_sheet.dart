@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../core/localization/localization_service.dart';
 import '../controllers/home_controller.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   final HomeController controller;
 
-  const FilterBottomSheet({
-    super.key,
-    required this.controller,
-  });
+  const FilterBottomSheet({super.key, required this.controller});
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
@@ -15,11 +13,22 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   final List<String> availableLanguages = [
-    'en', 'fr', 'de', 'es', 'it', 'pt', 'ru', 'zh', 'ja', 'ar'
+    'en',
+    'fr',
+    'de',
+    'es',
+    'it',
+    'pt',
+    'ru',
+    'zh',
+    'ja',
+    'ar',
   ];
-  
+
   final List<String> availableSortOptions = [
-    'popular', 'ascending', 'descending'
+    'popular',
+    'ascending',
+    'descending',
   ];
 
   List<String> selectedLanguages = [];
@@ -55,10 +64,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             children: [
               const Text(
                 'Filters',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {
@@ -69,20 +75,21 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     authorYearEnd = null;
                   });
                 },
-                child: const Text('Clear All'),
+                child: Text(
+                  LocalizationService.instance.translate(
+                    'widgets.filterBottomSheet.clearAll',
+                  ),
+                ),
               ),
             ],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Languages Filter
           const Text(
             'Languages',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -113,16 +120,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               );
             }).toList(),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Sort Filter
           const Text(
             'Sort by',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 12),
           ...availableSortOptions.map((option) {
@@ -139,16 +143,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               contentPadding: EdgeInsets.zero,
             );
           }),
-          
+
           const SizedBox(height: 24),
-          
+
           // Author Birth Year Filter
           const Text(
             'Author Birth Year Range',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 12),
           Row(
@@ -188,9 +189,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Apply Button
           SizedBox(
             width: double.infinity,
@@ -214,14 +215,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               child: const Text(
                 'Apply Filters',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ),
-          
+
           // Safe area padding
           SizedBox(height: MediaQuery.of(context).padding.bottom),
         ],
