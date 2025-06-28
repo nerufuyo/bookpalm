@@ -3,6 +3,7 @@ import '../pages/splash_page.dart';
 import '../pages/home_page.dart';
 import '../pages/bookmark_page.dart';
 import '../pages/book_detail_page.dart';
+import '../pages/settings_page.dart';
 import '../widgets/main_layout.dart';
 
 class AppRouter {
@@ -24,6 +25,8 @@ class AppRouter {
 
           if (location.startsWith('/bookmarks')) {
             currentIndex = 1;
+          } else if (location.startsWith('/settings')) {
+            currentIndex = 2;
           }
 
           return MainLayout(currentIndex: currentIndex, child: child);
@@ -38,6 +41,11 @@ class AppRouter {
             path: '/bookmarks',
             name: 'bookmarks',
             builder: (context, state) => const BookmarkPage(),
+          ),
+          GoRoute(
+            path: '/settings',
+            name: 'settings',
+            builder: (context, state) => const SettingsPage(),
           ),
         ],
       ),
